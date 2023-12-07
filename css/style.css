@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .calendar {
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .prev, .next {
+    cursor: pointer;
+  }
+  
+  .weekdays {
+    display: flex;
+  }
+  
+  .weekdays div {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .days div {
+    flex: 1;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .days div:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
