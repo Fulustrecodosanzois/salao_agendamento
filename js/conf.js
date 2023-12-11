@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const date = new Date(agendamento.dataSelecionada);
         const month = date.toLocaleString('default', { month: 'long' });
         const year = date.getFullYear();
-        const formattedMonth = `${month} de ${year}`;
+        const formattedMonth = `${month} ${year}`;
 
         if (!agendamentosPorMes[formattedMonth]) {
             agendamentosPorMes[formattedMonth] = {};
@@ -156,8 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Criação das abas para cada mês
         monthTabs.innerHTML += `
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="${tabId}-tab" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="false">${chaveMes}</button>
+            <li class="nav-item w-50" role="presentation">
+                <button class="nav-link btn btn-primary w-100 fw-bolder" id="${tabId}-tab" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="false">${chaveMes}</button>
             </li>
         `;
 
@@ -209,6 +209,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const tabs = new bootstrap.Tab(document.getElementById('monthTabs'));
     tabs.show(0); // Exibe a primeira aba por padrão ao carregar a página
 
-monthTabs.addEventListener('click', handleTabClick);
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+

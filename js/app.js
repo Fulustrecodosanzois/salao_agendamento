@@ -175,16 +175,8 @@
 
 
 
+//=========================================
 
-
-
-
-
-
-
-
-
-//=================================================================
 
 
 
@@ -239,8 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Horários selecionados:', horariosSelecionados);
     });
 });
-
-carregarHorariosDisponiveis();
 
 // ======================  ARMAZENAMENTO NO LOCALSTORAGE
 
@@ -355,4 +345,16 @@ document.getElementById('datePicker').addEventListener('change', carregarHorario
 
 // Chamar a função para carregar os horários disponíveis inicialmente
 carregarHorariosDisponiveis();
+
+
+
+
+
+
+
+
+
+
+
+
 
