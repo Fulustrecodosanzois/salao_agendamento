@@ -5,6 +5,14 @@
 //     // Limpar os horários disponíveis anteriores
 //     horariosDisponiveis.innerHTML = '';
 
+//     // Obter os agendamentos para a data selecionada
+//     let agendamentos = localStorage.getItem('dadosAgendamentos');
+//     agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+//     const horariosAgendadosNessaData = agendamentos
+//         .filter(agendamento => agendamento.dataSelecionada === dateStr)
+//         .flatMap(agendamento => agendamento.horariosSelecionados);
+
 //     // Criar e exibir os horários disponíveis para o dia selecionado
 //     for (let hora = 8; hora <= 19; hora++) {
 //         const horario = new Date(dataSelecionada);
@@ -16,15 +24,22 @@
 //         label.textContent = horarioFormatado;
 //         label.classList.add('btn', 'btn-light', 'horario-label');
 
-//         // Adicionar um ouvinte de eventos para marcar/desmarcar o horário ao ser clicado
-//         label.addEventListener('click', function () {
-//             label.classList.toggle('horario-selected');
-//             habilitarBotaoAgendar();
-//         });
+//         // Desabilitar horários já agendados
+//         if (horariosAgendadosNessaData.includes(horarioFormatado)) {
+//             label.disabled = true;
+//             label.classList.add('horario-agendado');
+//         } else {
+//             // Adicionar um ouvinte de eventos para marcar/desmarcar o horário ao ser clicado
+//             label.addEventListener('click', function () {
+//                 label.classList.toggle('horario-selected');
+//                 habilitarBotaoAgendar();
+//             });
+//         }
 
 //         horariosDisponiveis.appendChild(label);
 //     }
 // }
+
 
 // function habilitarBotaoAgendar() {
 //     const horariosSelecionados = document.querySelectorAll('.horario-selected');
@@ -49,10 +64,22 @@
 
 // // ======================  ARMAZENAMENTO NO LOCALSTORAGE
 
+
+
 // document.getElementById('btnEnviar').addEventListener('click', function (event) {
 //     event.preventDefault();
 
-//     // Obter dados do formulário
+//     const horarios = document.querySelectorAll('.horario-selected');
+//     const horariosSelecionados = Array.from(horarios).map(horario => horario.textContent);
+
+//     console.log('Horários selecionados:', horariosSelecionados);
+
+
+//     if (horariosSelecionados.length === 0) {
+//         alert('Por favor, selecione um horário disponível.');
+//         return;
+//     }
+
 //     const nome = document.getElementById('nome').value;
 //     const telefone = document.getElementById('telefone').value;
 //     const procedimentosSelecionados = [];
@@ -60,9 +87,29 @@
 //     procedimentos.forEach(procedimento => {
 //         procedimentosSelecionados.push(procedimento.nextElementSibling.textContent.trim());
 //     });
-//     const horarios = document.querySelectorAll('.horario-selected');
-//     const horariosSelecionados = Array.from(horarios).map(horario => horario.textContent);
 //     const dataSelecionada = document.getElementById('datePicker').value;
+
+//     let agendamentos = localStorage.getItem('dadosAgendamentos');
+//     agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+//     const horariosAgendadosNessaData = agendamentos
+//         .filter(agendamento => agendamento.dataSelecionada === dataSelecionada)
+//         .flatMap(agendamento => agendamento.horariosSelecionados);
+
+//     // Verificar se os horários selecionados estão disponíveis
+//     let horariosJaAgendados = false;
+//     horariosSelecionados.forEach(horarioSelecionado => {
+//         if (horariosAgendadosNessaData.includes(horarioSelecionado.textContent)) {
+//             horariosJaAgendados = true;
+//         }
+//     });
+
+//     if (horariosJaAgendados) {
+//         alert('Desculpe, este horário já foi agendado por outra pessoa.');
+//         return;
+//     }
+
+//     const horariosSelecionadosArray = Array.from(horariosSelecionados).map(horario => horario.textContent);
 
 //     // Crie uma string com os dados do agendamento
 //     const dadosAgendamento = `
@@ -108,6 +155,7 @@
 //         location.reload();
 //     });
 // });
+
 
 
 
@@ -169,11 +217,8 @@
 //     const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
 //     modalConfirmacao.hide();
 
+//     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
 
-//     // Limpe os campos do formulário após a confirmação (opcional)
-//     document.getElementById('nome').value = '';
-//     document.getElementById('telefone').value = '';
-//     // Limpe outras informações do formulário conforme necessário...
 // });
 
 
@@ -198,7 +243,8 @@
 
 
 
-//============================================= 
+
+//========================================================================   
 
 
 
@@ -223,26 +269,41 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
     // Limpar os horários disponíveis anteriores
     horariosDisponiveis.innerHTML = '';
 
+    // Obter os agendamentos para a data selecionada
+    let agendamentos = localStorage.getItem('dadosAgendamentos');
+    agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+    const horariosAgendadosNessaData = agendamentos
+        .filter(agendamento => agendamento.dataSelecionada === dateStr)
+        .flatMap(agendamento => agendamento.horariosSelecionados);
+
     // Criar e exibir os horários disponíveis para o dia selecionado
     for (let hora = 8; hora <= 19; hora++) {
         const horario = new Date(dataSelecionada);
         horario.setHours(hora, 0, 0, 0);
- 
+
         const horarioFormatado = horario.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         const label = document.createElement('label');
         label.textContent = horarioFormatado;
         label.classList.add('btn', 'btn-light', 'horario-label');
 
-        // Adicionar um ouvinte de eventos para marcar/desmarcar o horário ao ser clicado
-        label.addEventListener('click', function () {
-            label.classList.toggle('horario-selected');
-            habilitarBotaoAgendar();
-        });
+        // Desabilitar horários já agendados
+        if (horariosAgendadosNessaData.includes(horarioFormatado)) {
+            label.disabled = true;
+            label.classList.add('horario-agendado');
+        } else {
+            // Adicionar um ouvinte de eventos para marcar/desmarcar o horário ao ser clicado
+            label.addEventListener('click', function () {
+                label.classList.toggle('horario-selected');
+                habilitarBotaoAgendar();
+            });
+        }
 
         horariosDisponiveis.appendChild(label);
     }
 }
+
 
 function habilitarBotaoAgendar() {
     const horariosSelecionados = document.querySelectorAll('.horario-selected');
@@ -267,10 +328,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ======================  ARMAZENAMENTO NO LOCALSTORAGE
 
+
+
 document.getElementById('btnEnviar').addEventListener('click', function (event) {
     event.preventDefault();
 
-    // Obter dados do formulário
+    const horarios = document.querySelectorAll('.horario-selected');
+    const horariosSelecionados = Array.from(horarios).map(horario => horario.textContent);
+
+    console.log('Horários selecionados:', horariosSelecionados);
+
+
+    if (horariosSelecionados.length === 0) {
+        alert('Por favor, selecione um horário disponível.');
+        return;
+    }
+
     const nome = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
     const procedimentosSelecionados = [];
@@ -278,9 +351,29 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
     procedimentos.forEach(procedimento => {
         procedimentosSelecionados.push(procedimento.nextElementSibling.textContent.trim());
     });
-    const horarios = document.querySelectorAll('.horario-selected');
-    const horariosSelecionados = Array.from(horarios).map(horario => horario.textContent);
     const dataSelecionada = document.getElementById('datePicker').value;
+
+    let agendamentos = localStorage.getItem('dadosAgendamentos');
+    agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+    const horariosAgendadosNessaData = agendamentos
+        .filter(agendamento => agendamento.dataSelecionada === dataSelecionada)
+        .flatMap(agendamento => agendamento.horariosSelecionados);
+
+    // Verificar se os horários selecionados estão disponíveis
+    let horariosJaAgendados = false;
+    horariosSelecionados.forEach(horarioSelecionado => {
+        if (horariosAgendadosNessaData.includes(horarioSelecionado.textContent)) {
+            horariosJaAgendados = true;
+        }
+    });
+
+    if (horariosJaAgendados) {
+        alert('Desculpe, este horário já foi agendado por outra pessoa.');
+        return;
+    }
+
+    const horariosSelecionadosArray = Array.from(horariosSelecionados).map(horario => horario.textContent);
 
     // Crie uma string com os dados do agendamento
     const dadosAgendamento = `
@@ -387,14 +480,10 @@ document.getElementById('btnConfirmar').addEventListener('click', function () {
     // Feche o modal de confirmação se necessário
     const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
     modalConfirmacao.hide();
-    
+
     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
-  
+
 });
-
-
-
-
 
 
 
