@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,21 +10,24 @@
 </head>
 
 <body>
-    <h1>Dados de Agendamentos</h1>
+    <h1 class="mt-4 text-center">Dados de Agendamentos</h1>
 
-    <div id="accordion">
-        <!-- O acordeão será inserido aqui -->
+    <div class="container">
+        <ul class="nav nav-tabs" id="monthTabs" role="tablist">
+            <!-- Aqui serão criadas as abas para cada mês -->
+        </ul>
+        <div class="tab-content" id="monthContent">
+            <!-- Aqui serão exibidos os agendamentos para o mês selecionado -->
+        </div>
     </div>
 
-
-
+    <!-- Restante do código... -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/conf.js"></script>
-
 </body>
 
 </html>

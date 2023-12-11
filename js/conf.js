@@ -6,7 +6,6 @@
 
 //     agendamentos.forEach((agendamento, index) => {
 //         const date = new Date(agendamento.dataSelecionada);
-//         const day = date.getDate();
 //         const month = date.toLocaleString('default', { month: 'long' });
 //         const year = date.getFullYear();
 //         const formattedMonth = `${month} de ${year}`;
@@ -15,6 +14,7 @@
 //             agendamentosPorMes[formattedMonth] = {};
 //         }
 
+//         const day = date.getDate();
 //         if (!agendamentosPorMes[formattedMonth][day]) {
 //             agendamentosPorMes[formattedMonth][day] = [];
 //         }
@@ -22,64 +22,78 @@
 //         agendamentosPorMes[formattedMonth][day].push(agendamento);
 //     });
 
-//     const accordionElement = document.getElementById('accordion');
-//     let html = '';
+//     const monthOrder = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 
-//     for (const chaveMes in agendamentosPorMes) {
-//         html += `
-//             <div class="accordion-item">
-//                 <h2 class="accordion-header" id="heading${chaveMes.replace(/\s/g, '')}">
-//                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${chaveMes.replace(/\s/g, '')}" aria-expanded="false" aria-controls="collapse${chaveMes.replace(/\s/g, '')}">
-//                         ${chaveMes}
-//                     </button>
-//                 </h2>
-//                 <div id="collapse${chaveMes.replace(/\s/g, '')}" class="accordion-collapse collapse" aria-labelledby="heading${chaveMes.replace(/\s/g, '')}" data-bs-parent="#accordion">
-//                     <div class="accordion-body">
-//                         ${renderizarAgendamentosPorMes(agendamentosPorMes[chaveMes])}
-//                     </div>
-//                 </div>
-//             </div>
-//         `;
-//     }
-
-//     accordionElement.innerHTML = html;
-// });
-
-// function renderizarAgendamentosPorMes(agendamentosPorDia) {
-//     let html = '';
-
-//     for (const chaveDia in agendamentosPorDia) {
-//         html += `<div class="day-container">
-//             <h3 class="my-3">${chaveDia}</h3>
-//             ${renderizarAgendamentos(agendamentosPorDia[chaveDia])}
-//         </div>`;
-//     }
-
-//     return html;
-// }
-
-// function renderizarAgendamentos(agendamentos) {
-//     let html = '';
-
-//     agendamentos.forEach((agendamento, index) => {
-//         const date = new Date(agendamento.dataSelecionada);
-//         const formattedDate = date.toLocaleDateString('pt-BR');
-
-//         html += `
-//             <div class="list-group">
-//                 <div class="list-group-item list-group-item-action">
-//                     <div><strong>Nome:</strong> ${agendamento.nome}</div>
-//                     <div><strong>Telefone:</strong> ${agendamento.telefone}</div>
-//                     <div><strong>Data Selecionada:</strong> ${formattedDate}</div>
-//                     <div><strong>Horários Selecionados:</strong> ${agendamento.horariosSelecionados.join(', ')}</div>
-//                     <div><strong>Procedimentos:</strong> ${agendamento.procedimentos.join(', ')}</div>
-//                 </div>
-//             </div>
-//         `;
+//     const sortedMonths = Object.keys(agendamentosPorMes).sort((a, b) => {
+//         const aIndex = monthOrder.indexOf(a.split(' ')[0].toLowerCase());
+//         const bIndex = monthOrder.indexOf(b.split(' ')[0].toLowerCase());
+//         return aIndex - bIndex;
 //     });
 
-//     return html;
-// }
+//     const monthTabs = document.getElementById('monthTabs');
+//     const monthContent = document.getElementById('monthContent');
+
+//     sortedMonths.forEach(chaveMes => {
+//         const tabId = chaveMes.replace(/\s/g, '');
+
+//         // Criação das abas para cada mês
+//         monthTabs.innerHTML += `
+//             <li class="nav-item" role="presentation">
+//                 <button class="nav-link" id="${tabId}-tab" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="false">${chaveMes}</button>
+//             </li>
+//         `;
+
+//         // Criação do conteúdo de cada aba com os agendamentos correspondentes
+//         const agendamentosPorDia = agendamentosPorMes[chaveMes];
+//         let tabContent = `
+//             <div class="tab-pane fade" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+//         `;
+
+//         for (const chaveDia in agendamentosPorDia) {
+//             tabContent += `
+//                 <h4 class="my-4 bg-info rounded p-3">Dia ${chaveDia}</h4>
+//                 <div class="row row-cols-1 row-cols-md-3 g-4">
+//             `;
+
+//             const agendamentosDoDia = agendamentosPorDia[chaveDia];
+//             agendamentosDoDia.forEach(agendamento => {
+//                 tabContent += `
+//                     <div class="col">
+//                         <div class="card">
+//                             <div class="card-body">
+//                                 <h5 class="card-title">${agendamento.dataSelecionada}</h5>
+//                                 <p class="card-text">Nome: ${agendamento.nome}</p>
+//                                 <p class="card-text">Telefone: ${agendamento.telefone}</p>
+//                                 <p class="card-text">Procedimentos:</p>
+//                                 <ul class="list-group">`;
+
+//                 agendamento.procedimentos.forEach(procedimento => {
+//                     tabContent += `
+//                         <li class="list-group-item">${procedimento}</li>
+//                     `;
+//                 });
+
+//                 tabContent += `
+//                                 </ul>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 `;
+//             });
+
+//             tabContent += `</div>`;
+//         }
+
+//         tabContent += `</div>`;
+//         monthContent.innerHTML += tabContent;
+//     });
+
+//     const tabs = new bootstrap.Tab(document.getElementById('monthTabs'));
+//     tabs.show(0); // Exibe a primeira aba por padrão ao carregar a página
+
+// monthTabs.addEventListener('click', handleTabClick);
+
+// });
 
 
 
@@ -97,40 +111,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ========================================================
 
 
 
@@ -143,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     agendamentos.forEach((agendamento, index) => {
         const date = new Date(agendamento.dataSelecionada);
-        const day = date.getDate();
         const month = date.toLocaleString('default', { month: 'long' });
         const year = date.getFullYear();
         const formattedMonth = `${month} de ${year}`;
@@ -152,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
             agendamentosPorMes[formattedMonth] = {};
         }
 
+        const day = date.getDate();
         if (!agendamentosPorMes[formattedMonth][day]) {
             agendamentosPorMes[formattedMonth][day] = [];
         }
@@ -159,77 +140,75 @@ document.addEventListener('DOMContentLoaded', function () {
         agendamentosPorMes[formattedMonth][day].push(agendamento);
     });
 
-    const accordionElement = document.getElementById('accordion');
-    let html = '';
+    const monthOrder = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 
-    for (const chaveMes in agendamentosPorMes) {
-        html += `
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading${chaveMes.replace(/\s/g, '')}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${chaveMes.replace(/\s/g, '')}" aria-expanded="false" aria-controls="collapse${chaveMes.replace(/\s/g, '')}">
-                        ${chaveMes}
-                    </button>
-                </h2>
-                <div id="collapse${chaveMes.replace(/\s/g, '')}" class="accordion-collapse collapse" aria-labelledby="heading${chaveMes.replace(/\s/g, '')}" data-bs-parent="#accordion">
-                    <div class="accordion-body">
-                        ${renderizarAgendamentosPorMes(agendamentosPorMes[chaveMes])}
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    accordionElement.innerHTML = html;
-});
-
-function renderizarAgendamentosPorMes(agendamentosPorDia) {
-    let html = '';
-
-    for (const chaveDia in agendamentosPorDia) {
-        html += `
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading${chaveDia.replace(/\s/g, '')}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${chaveDia.replace(/\s/g, '')}" aria-expanded="false" aria-controls="collapse${chaveDia.replace(/\s/g, '')}">
-                        ${chaveDia}
-                    </button>
-                </h2>
-                <div id="collapse${chaveDia.replace(/\s/g, '')}" class="accordion-collapse collapse" aria-labelledby="heading${chaveDia.replace(/\s/g, '')}" data-bs-parent="#accordion">
-                    <div class="accordion-body">
-                        ${renderizarAgendamentos(agendamentosPorDia[chaveDia])}
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    return html;
-}
-
-function renderizarAgendamentos(agendamentos) {
-    let html = '';
-
-    agendamentos.forEach((agendamento, index) => {
-        const date = new Date(agendamento.dataSelecionada);
-        const formattedDate = date.toLocaleDateString('pt-BR');
-
-        html += `
-            <div class="list-group">
-                <div class="list-group-item list-group-item-action">
-                    <div><strong>Nome:</strong> ${agendamento.nome}</div>
-                    <div><strong>Telefone:</strong> ${agendamento.telefone}</div>
-                    <div><strong>Data Selecionada:</strong> ${formattedDate}</div>
-                    <div><strong>Horários Selecionados:</strong> ${agendamento.horariosSelecionados.join(', ')}</div>
-                    <div><strong>Procedimentos:</strong> ${agendamento.procedimentos.join(', ')}</div>
-                </div>
-            </div>
-        `;
+    const sortedMonths = Object.keys(agendamentosPorMes).sort((a, b) => {
+        const aIndex = monthOrder.indexOf(a.split(' ')[0].toLowerCase());
+        const bIndex = monthOrder.indexOf(b.split(' ')[0].toLowerCase());
+        return aIndex - bIndex;
     });
 
-    return html;
-}
+    const monthTabs = document.getElementById('monthTabs');
+    const monthContent = document.getElementById('monthContent');
 
+    sortedMonths.forEach(chaveMes => {
+        const tabId = chaveMes.replace(/\s/g, '');
 
+        // Criação das abas para cada mês
+        monthTabs.innerHTML += `
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="${tabId}-tab" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="false">${chaveMes}</button>
+            </li>
+        `;
 
+        // Criação do conteúdo de cada aba com os agendamentos correspondentes
+        const agendamentosPorDia = agendamentosPorMes[chaveMes];
+        let tabContent = `
+            <div class="tab-pane fade" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+        `;
 
+        for (const chaveDia in agendamentosPorDia) {
+            tabContent += `
+                <h4 class="my-4 bg-info rounded p-3">Dia ${chaveDia}</h4>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+            `;
 
+            const agendamentosDoDia = agendamentosPorDia[chaveDia];
+            agendamentosDoDia.forEach(agendamento => {
+                tabContent += `
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${agendamento.dataSelecionada}</h5>
+                                <p class="card-text">Nome: ${agendamento.nome}</p>
+                                <p class="card-text">Telefone: ${agendamento.telefone}</p>
+                                <p class="card-text">Procedimentos:</p>
+                                <ul class="list-group">`;
 
+                agendamento.procedimentos.forEach(procedimento => {
+                    tabContent += `
+                        <li class="list-group-item">${procedimento}</li>
+                    `;
+                });
+
+                tabContent += `
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            tabContent += `</div>`;
+        }
+
+        tabContent += `</div>`;
+        monthContent.innerHTML += tabContent;
+    });
+
+    const tabs = new bootstrap.Tab(document.getElementById('monthTabs'));
+    tabs.show(0); // Exibe a primeira aba por padrão ao carregar a página
+
+monthTabs.addEventListener('click', handleTabClick);
+
+});

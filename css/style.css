@@ -1,8 +1,18 @@
  /* Estilos personalizados */
  .horario-label {
-    margin-right: 5px;
-  }
-  .horario-selected {
-    background-color: #007bff;
-    color: #fff;
-  }
+   margin-right: 5px;
+ }
+
+ .horario-selected {
+   background-color: #007bff;
+   color: #fff;
+ }
+
+
+ th {
+   transform: rotate(-90deg);
+   width: 30px;
+   /* Ajuste conforme necessário */
+   white-space: nowrap;
+   /* Evita que o texto quebre em várias linhas */
+ }
