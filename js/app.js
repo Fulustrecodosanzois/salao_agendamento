@@ -227,7 +227,7 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
     for (let hora = 8; hora <= 19; hora++) {
         const horario = new Date(dataSelecionada);
         horario.setHours(hora, 0, 0, 0);
-
+ 
         const horarioFormatado = horario.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         const label = document.createElement('label');
@@ -329,6 +329,7 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
 
 
 
+
 //=========================== FORMATAR TELEFONE
 
 // Função para formatar o número de telefone enquanto o usuário digita
@@ -386,12 +387,9 @@ document.getElementById('btnConfirmar').addEventListener('click', function () {
     // Feche o modal de confirmação se necessário
     const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
     modalConfirmacao.hide();
-
-
-    // Limpe os campos do formulário após a confirmação (opcional)
-    document.getElementById('nome').value = '';
-    document.getElementById('telefone').value = '';
-    // Limpe outras informações do formulário conforme necessário...
+    
+    alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
+  
 });
 
 
