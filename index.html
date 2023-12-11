@@ -90,21 +90,43 @@
                     <div class="">
                         <div id="horariosDisponiveis" class="my-4 row d-flex align-content-center">
                             <div class="">
-                            <!-- Aqui serão exibidos os horários disponíveis -->
+                                <!-- Aqui serão exibidos os horários disponíveis -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class=" d-flex justify-content-center align-content-center">
-                <button class="btn btn-primary fw-bold" type="submit" id="btnEnviar">Agendar</button>
+            <div class=" d-flex justify-content-center align-content-center mb-4">
+                <button class="btn btn-primary fw-bold" type="submit" id="btnEnviar">Enviar</button>
             </div>
         </div>
 
 
-        
+
     </form>
+
+    <!----------------------------------- Modal -->
+    <div class="modal fade" id="modalConfirmacao" tabindex="-1" aria-labelledby="modalConfirmacaoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfirmacaoLabel">Confirmação de Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="dadosConfirmacao">
+                    <!-- Aqui serão exibidos os dados do agendamento -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnConfirmar">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 

@@ -50,63 +50,63 @@
 // // ======================  ARMAZENAMENTO NO LOCALSTORAGE
 
 // document.getElementById('btnEnviar').addEventListener('click', function (event) {
-//     event.preventDefault(); // Impede o envio do formulário para permitir validações
+//     event.preventDefault();
 
+//     // Obter dados do formulário
 //     const nome = document.getElementById('nome').value;
 //     const telefone = document.getElementById('telefone').value;
-
 //     const procedimentosSelecionados = [];
 //     const procedimentos = document.querySelectorAll('.form-check-input:checked');
 //     procedimentos.forEach(procedimento => {
 //         procedimentosSelecionados.push(procedimento.nextElementSibling.textContent.trim());
 //     });
-
 //     const horarios = document.querySelectorAll('.horario-selected');
 //     const horariosSelecionados = Array.from(horarios).map(horario => horario.textContent);
-
 //     const dataSelecionada = document.getElementById('datePicker').value;
 
-//     // Obter os dados do localStorage se já houver algum agendamento
-//     let agendamentos = localStorage.getItem('dadosAgendamentos');
-//     agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+//     // Crie uma string com os dados do agendamento
+//     const dadosAgendamento = `
+//         <p><strong>Nome:</strong> ${nome}</p>
+//         <p><strong>Telefone:</strong> ${telefone}</p>
+//         <p><strong>Procedimentos:</strong> ${procedimentosSelecionados.join(', ')}</p>
+//         <p><strong>Data Selecionada:</strong> ${dataSelecionada}</p>
+//         <p><strong>Horários Selecionados:</strong> ${horariosSelecionados.join(', ')}</p>
+//     `;
 
-//     // Verificar se há algum agendamento para a mesma data e horário
-//     const horarioJaAgendado = agendamentos.some(agendamento => {
-//         return (
-//             agendamento.dataSelecionada === dataSelecionada &&
-//             agendamento.horariosSelecionados.some(horario => horariosSelecionados.includes(horario))
-//         );
+//     // Insira os dados do agendamento no modal
+//     document.getElementById('dadosConfirmacao').innerHTML = dadosAgendamento;
+
+//     // Exibir o modal de confirmação
+//     const modalConfirmacao = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
+//     modalConfirmacao.show();
+
+//     // Evento de confirmação dentro do modal
+//     document.getElementById('btnConfirmar').addEventListener('click', function () {
+//         // Adicione a lógica de confirmação para armazenar no localStorage
+//         const novoAgendamento = {
+//             nome: nome,
+//             telefone: telefone,
+//             procedimentos: procedimentosSelecionados,
+//             dataSelecionada: dataSelecionada,
+//             horariosSelecionados: horariosSelecionados
+//         };
+
+//         // Obtenha os dados do localStorage se já houver algum agendamento
+//         let agendamentos = localStorage.getItem('dadosAgendamentos');
+//         agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+//         // Adicione o novo agendamento à lista de agendamentos
+//         agendamentos.push(novoAgendamento);
+
+//         // Armazene os dados atualizados no localStorage como JSON
+//         localStorage.setItem('dadosAgendamentos', JSON.stringify(agendamentos));
+
+//         // Feche o modal de confirmação
+//         modalConfirmacao.hide();
+
+//         // Recarregue a página para limpar os campos do formulário
+//         location.reload();
 //     });
-
-//     if (horarioJaAgendado) {
-//         alert('Este horário já foi agendado. Por favor, selecione outro horário.');
-//         return; // Impede o envio do formulário se o horário já estiver agendado
-//     }
-
-//     // Criar um objeto para armazenar os dados do agendamento atual
-//     const novoAgendamento = {
-//         nome: nome,
-//         telefone: telefone,
-//         procedimentos: procedimentosSelecionados,
-//         dataSelecionada: dataSelecionada,
-//         horariosSelecionados: horariosSelecionados
-//     };
-
-//     // Adicionar o novo agendamento à lista de agendamentos
-//     agendamentos.push(novoAgendamento);
-
-//     // Armazenar os dados atualizados no localStorage como JSON
-//     localStorage.setItem('dadosAgendamentos', JSON.stringify(agendamentos));
-
-//     // Exibir os dados no console (opcional)
-//     console.log('Todos os agendamentos:', agendamentos);
-
-//     // Limpar o formulário após o envio bem-sucedido (opcional)
-//     document.getElementById('nome').value = '';
-//     document.getElementById('telefone').value = '';
-//     // Limpar outras informações do formulário conforme necessário...
-
-//     // Outras ações após o envio do formulário bem-sucedido, se necessário...
 // });
 
 
@@ -162,6 +162,19 @@
 // carregarHorariosDisponiveis();
 
 
+// // Evento de confirmação dentro do modal
+// document.getElementById('btnConfirmar').addEventListener('click', function () {
+//     // Adicione a lógica de confirmação (ex: enviar dados para o servidor, etc.)
+//     // Feche o modal de confirmação se necessário
+//     const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
+//     modalConfirmacao.hide();
+
+
+//     // Limpe os campos do formulário após a confirmação (opcional)
+//     document.getElementById('nome').value = '';
+//     document.getElementById('telefone').value = '';
+//     // Limpe outras informações do formulário conforme necessário...
+// });
 
 
 
@@ -175,7 +188,27 @@
 
 
 
-//=========================================
+
+
+
+
+
+
+
+
+
+
+//============================================= 
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -235,63 +268,63 @@ document.addEventListener('DOMContentLoaded', function () {
 // ======================  ARMAZENAMENTO NO LOCALSTORAGE
 
 document.getElementById('btnEnviar').addEventListener('click', function (event) {
-    event.preventDefault(); // Impede o envio do formulário para permitir validações
+    event.preventDefault();
 
+    // Obter dados do formulário
     const nome = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
-
     const procedimentosSelecionados = [];
     const procedimentos = document.querySelectorAll('.form-check-input:checked');
     procedimentos.forEach(procedimento => {
         procedimentosSelecionados.push(procedimento.nextElementSibling.textContent.trim());
     });
-
     const horarios = document.querySelectorAll('.horario-selected');
     const horariosSelecionados = Array.from(horarios).map(horario => horario.textContent);
-
     const dataSelecionada = document.getElementById('datePicker').value;
 
-    // Obter os dados do localStorage se já houver algum agendamento
-    let agendamentos = localStorage.getItem('dadosAgendamentos');
-    agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+    // Crie uma string com os dados do agendamento
+    const dadosAgendamento = `
+        <p><strong>Nome:</strong> ${nome}</p>
+        <p><strong>Telefone:</strong> ${telefone}</p>
+        <p><strong>Procedimentos:</strong> ${procedimentosSelecionados.join(', ')}</p>
+        <p><strong>Data Selecionada:</strong> ${dataSelecionada}</p>
+        <p><strong>Horários Selecionados:</strong> ${horariosSelecionados.join(', ')}</p>
+    `;
 
-    // Verificar se há algum agendamento para a mesma data e horário
-    const horarioJaAgendado = agendamentos.some(agendamento => {
-        return (
-            agendamento.dataSelecionada === dataSelecionada &&
-            agendamento.horariosSelecionados.some(horario => horariosSelecionados.includes(horario))
-        );
+    // Insira os dados do agendamento no modal
+    document.getElementById('dadosConfirmacao').innerHTML = dadosAgendamento;
+
+    // Exibir o modal de confirmação
+    const modalConfirmacao = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
+    modalConfirmacao.show();
+
+    // Evento de confirmação dentro do modal
+    document.getElementById('btnConfirmar').addEventListener('click', function () {
+        // Adicione a lógica de confirmação para armazenar no localStorage
+        const novoAgendamento = {
+            nome: nome,
+            telefone: telefone,
+            procedimentos: procedimentosSelecionados,
+            dataSelecionada: dataSelecionada,
+            horariosSelecionados: horariosSelecionados
+        };
+
+        // Obtenha os dados do localStorage se já houver algum agendamento
+        let agendamentos = localStorage.getItem('dadosAgendamentos');
+        agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+        // Adicione o novo agendamento à lista de agendamentos
+        agendamentos.push(novoAgendamento);
+
+        // Armazene os dados atualizados no localStorage como JSON
+        localStorage.setItem('dadosAgendamentos', JSON.stringify(agendamentos));
+
+        // Feche o modal de confirmação
+        modalConfirmacao.hide();
+
+        // Recarregue a página para limpar os campos do formulário
+        location.reload();
     });
-
-    if (horarioJaAgendado) {
-        alert('Este horário já foi agendado. Por favor, selecione outro horário.');
-        return; // Impede o envio do formulário se o horário já estiver agendado
-    }
-
-    // Criar um objeto para armazenar os dados do agendamento atual
-    const novoAgendamento = {
-        nome: nome,
-        telefone: telefone,
-        procedimentos: procedimentosSelecionados,
-        dataSelecionada: dataSelecionada,
-        horariosSelecionados: horariosSelecionados
-    };
-
-    // Adicionar o novo agendamento à lista de agendamentos
-    agendamentos.push(novoAgendamento);
-
-    // Armazenar os dados atualizados no localStorage como JSON
-    localStorage.setItem('dadosAgendamentos', JSON.stringify(agendamentos));
-
-    // Exibir os dados no console (opcional)
-    console.log('Todos os agendamentos:', agendamentos);
-
-    // Limpar o formulário após o envio bem-sucedido (opcional)
-    document.getElementById('nome').value = '';
-    document.getElementById('telefone').value = '';
-    // Limpar outras informações do formulário conforme necessário...
-
-    // Outras ações após o envio do formulário bem-sucedido, se necessário...
 });
 
 
@@ -347,6 +380,19 @@ document.getElementById('datePicker').addEventListener('change', carregarHorario
 carregarHorariosDisponiveis();
 
 
+// Evento de confirmação dentro do modal
+document.getElementById('btnConfirmar').addEventListener('click', function () {
+    // Adicione a lógica de confirmação (ex: enviar dados para o servidor, etc.)
+    // Feche o modal de confirmação se necessário
+    const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
+    modalConfirmacao.hide();
+
+
+    // Limpe os campos do formulário após a confirmação (opcional)
+    document.getElementById('nome').value = '';
+    document.getElementById('telefone').value = '';
+    // Limpe outras informações do formulário conforme necessário...
+});
 
 
 
