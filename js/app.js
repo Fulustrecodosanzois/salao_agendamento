@@ -136,10 +136,14 @@
 //     const modalConfirmacao = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
 //     modalConfirmacao.show();
 
+//     // Criar um ID de rastreamento único para o novo agendamento
+//     const idRastreio = generateUniqueID(); // Função para gerar um ID único
+
 //     // Evento de confirmação dentro do modal
 //     document.getElementById('btnConfirmar').addEventListener('click', function () {
 //         // Adicione a lógica de confirmação para armazenar no localStorage
 //         const novoAgendamento = {
+//             idRastreio: idRastreio,
 //             nome: nome,
 //             telefone: telefone,
 //             procedimentos: procedimentosSelecionados,
@@ -165,10 +169,15 @@
 //     });
 // });
 
-
+// // Função para gerar um ID único (você pode usar uma biblioteca externa ou implementar a sua lógica para criar IDs únicos)
+// function generateUniqueID() {
+//     // Implemente sua lógica para gerar um ID único, por exemplo:
+//     return 'ID-' + Math.random().toString(36).substr(2, 9);
+// }
 
 
 // //=========================== FORMATAR TELEFONE
+
 
 // // Função para formatar o número de telefone enquanto o usuário digita
 // const telefoneInput = document.getElementById('telefone');
@@ -248,11 +257,12 @@
 
 
 
+//===========================================================
 
 
 
 
-//=====================================================================
+
 
 
 
@@ -411,10 +421,14 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
     const modalConfirmacao = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
     modalConfirmacao.show();
 
+    // Criar um ID de rastreamento único para o novo agendamento
+    const idRastreio = generateUniqueID(); // Função para gerar um ID único
+
     // Evento de confirmação dentro do modal
     document.getElementById('btnConfirmar').addEventListener('click', function () {
         // Adicione a lógica de confirmação para armazenar no localStorage
         const novoAgendamento = {
+            idRastreio: idRastreio,
             nome: nome,
             telefone: telefone,
             procedimentos: procedimentosSelecionados,
@@ -439,6 +453,12 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
         location.reload();
     });
 });
+
+// Função para gerar um ID único (você pode usar uma biblioteca externa ou implementar a sua lógica para criar IDs únicos)
+function generateUniqueID() {
+    // Implemente sua lógica para gerar um ID único, por exemplo:
+    return 'ID-' + Math.random().toString(36).substr(2, 9);
+}
 
 
 //=========================== FORMATAR TELEFONE
