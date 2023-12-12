@@ -1,3 +1,7 @@
+// let horarioSelecionado = null; // Definindo a variável no escopo global
+
+
+
 // function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
 //     const dataSelecionada = new Date(dateStr);
 //     const horariosDisponiveis = document.getElementById('horariosDisponiveis');
@@ -25,14 +29,21 @@
 //         label.classList.add('btn', 'btn-light', 'horario-label');
 
 //         // Desabilitar horários já agendados
-//         if (horariosAgendadosNessaData.includes(horarioFormatado)) {
-//             label.disabled = true;
-//             label.classList.add('horario-agendado');
-//         } else {
-//             // Adicionar um ouvinte de eventos para marcar/desmarcar o horário ao ser clicado
+//         if (!horariosAgendadosNessaData.includes(horarioFormatado)) {
 //             label.addEventListener('click', function () {
-//                 label.classList.toggle('horario-selected');
-//                 habilitarBotaoAgendar();
+//                 if (horarioSelecionado !== horarioFormatado) {
+//                     const horarioSelecionadoElement = document.querySelector('.horario-selected');
+//                     if (horarioSelecionadoElement) {
+//                         horarioSelecionadoElement.classList.remove('horario-selected');
+//                     }
+//                     label.classList.add('horario-selected');
+//                     horarioSelecionado = horarioFormatado;
+//                     habilitarBotaoAgendar();
+//                 } else {
+//                     label.classList.remove('horario-selected');
+//                     horarioSelecionado = null;
+//                     habilitarBotaoAgendar();
+//                 }
 //             });
 //         }
 
@@ -42,10 +53,8 @@
 
 
 // function habilitarBotaoAgendar() {
-//     const horariosSelecionados = document.querySelectorAll('.horario-selected');
 //     const btnEnviar = document.getElementById('btnEnviar');
-
-//     btnEnviar.disabled = horariosSelecionados.length === 0;
+//     btnEnviar.disabled = horarioSelecionado === null;
 // }
 
 // document.addEventListener('DOMContentLoaded', function () {
@@ -243,9 +252,7 @@
 
 
 
-
-//========================================================================   
-
+//=====================================================================
 
 
 
@@ -259,6 +266,14 @@
 
 
 
+
+
+
+
+
+
+
+let horarioSelecionado = null; // Definindo a variável no escopo global
 
 
 
@@ -289,14 +304,21 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
         label.classList.add('btn', 'btn-light', 'horario-label');
 
         // Desabilitar horários já agendados
-        if (horariosAgendadosNessaData.includes(horarioFormatado)) {
-            label.disabled = true;
-            label.classList.add('horario-agendado');
-        } else {
-            // Adicionar um ouvinte de eventos para marcar/desmarcar o horário ao ser clicado
+        if (!horariosAgendadosNessaData.includes(horarioFormatado)) {
             label.addEventListener('click', function () {
-                label.classList.toggle('horario-selected');
-                habilitarBotaoAgendar();
+                if (horarioSelecionado !== horarioFormatado) {
+                    const horarioSelecionadoElement = document.querySelector('.horario-selected');
+                    if (horarioSelecionadoElement) {
+                        horarioSelecionadoElement.classList.remove('horario-selected');
+                    }
+                    label.classList.add('horario-selected');
+                    horarioSelecionado = horarioFormatado;
+                    habilitarBotaoAgendar();
+                } else {
+                    label.classList.remove('horario-selected');
+                    horarioSelecionado = null;
+                    habilitarBotaoAgendar();
+                }
             });
         }
 
@@ -306,10 +328,8 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
 
 
 function habilitarBotaoAgendar() {
-    const horariosSelecionados = document.querySelectorAll('.horario-selected');
     const btnEnviar = document.getElementById('btnEnviar');
-
-    btnEnviar.disabled = horariosSelecionados.length === 0;
+    btnEnviar.disabled = horarioSelecionado === null;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -421,9 +441,8 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
 });
 
 
-
-
 //=========================== FORMATAR TELEFONE
+
 
 // Função para formatar o número de telefone enquanto o usuário digita
 const telefoneInput = document.getElementById('telefone');
@@ -484,9 +503,6 @@ document.getElementById('btnConfirmar').addEventListener('click', function () {
     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
 
 });
-
-
-
 
 
 
