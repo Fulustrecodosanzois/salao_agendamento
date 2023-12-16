@@ -397,7 +397,6 @@
 
 
 
-//===========================================================
 
 
 
@@ -409,6 +408,14 @@
 
 
 
+
+
+
+
+
+
+
+//===========================================
 
 
 
@@ -503,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                             
+
                                 <p class="card-text">Agendado para: ${agendamento.horariosSelecionados.join(', ')}h</p>
                                 <p class="card-text">Nome: ${agendamento.nome}</p>
                                 <p class="card-text">Telefone: ${agendamento.telefone}</p>
@@ -513,8 +520,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <button class="btn btn-warning btn-edit my-4" data-index="${agendamentos.indexOf(agendamento)}">Editar</button>
                                 <button class="btn btn-danger btn-delete my-4" data-index="${agendamentos.indexOf(agendamento)}">Deletar</button>
                                 </div>
-                              
-                                
+
+
                                 `;
 
 
@@ -571,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             <button type="submit" class="btn btn-primary">Adicionar Procedimento</button>
         </form>
-        
+
     `;
 
         const addProcedimentoForm = document.getElementById('addProcedimentoForm');
@@ -640,20 +647,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     <label for="editTelefone" class="form-label">Telefone:</label>
                     <input type="text" class="form-control" id="editTelefone" value="${agendamento.telefone}">
                 </div>
-                <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Toque e Escolha os Procedimentos
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                    <div class="accordion-body" id="newProcedimentos">
-                        <!-- Lista de checkboxes para novos procedimentos -->
+                <div class="mb-3">
+                    <label for="editProcedimentos" class="form-label">Procedimentos:</label>
+                    <ul class="list-group" id="editProcedimentos"></ul>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="newProcedimento" placeholder="Novo Procedimento">
+                        <button type="button" class="btn btn-primary" id="btnAddProcedimento">Adicionar</button>
                     </div>
                 </div>
-            </div>
-            </div>
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
             </form>
         `;
@@ -661,28 +662,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const editForm = document.getElementById('editForm');
         const newProcedimentoInput = document.getElementById('newProcedimento');
         const procedimentosList = document.getElementById('editProcedimentos');
-        const newProcedimentosDiv = document.getElementById('newProcedimentos');
-
-        // Adicionar checkboxes para novos procedimentos
-        const procedimentosDisponiveis = [
-            'Corte de cabelo',
-            'Manicure',
-            'Pedicure',
-            'Maquiagem',
-            'Tratamento Facial'
-            // Adicione aqui outros procedimentos disponíveis conforme necessário
-        ];
-
-        procedimentosDisponiveis.forEach((procedimento, idx) => {
-            newProcedimentosDiv.innerHTML += `
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="${idx}" id="checkbox${idx}">
-                    <label class="form-check-label" for="checkbox${idx}">
-                        ${procedimento}
-                    </label>
-                </div>
-            `;
-        });
 
         editForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -823,3 +802,60 @@ function topFunctionModal() {
 
 
 //=============================== 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
