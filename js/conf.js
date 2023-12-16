@@ -66,7 +66,7 @@
 //                     <div class="col">
 //                         <div class="card">
 //                             <div class="card-body">
-                                             
+
 //                                 <p class="card-text">Agendado para: ${agendamento.horariosSelecionados.join(', ')}h</p>
 //                                 <p class="card-text">Nome: ${agendamento.nome}</p>
 //                                 <p class="card-text">Telefone: ${agendamento.telefone}</p>
@@ -76,8 +76,8 @@
 //                                 <button class="btn btn-warning btn-edit my-4" data-index="${agendamentos.indexOf(agendamento)}">Editar</button>
 //                                 <button class="btn btn-danger btn-delete my-4" data-index="${agendamentos.indexOf(agendamento)}">Deletar</button>
 //                                 </div>
-                              
-                                
+
+
 //                                 `;
 
 
@@ -134,7 +134,7 @@
 
 //             <button type="submit" class="btn btn-primary">Adicionar Procedimento</button>
 //         </form>
-        
+
 //     `;
 
 //         const addProcedimentoForm = document.getElementById('addProcedimentoForm');
@@ -181,22 +181,15 @@
 //     }
 
 
-//     // Função para deletar um procedimento do agendamento
-//     function deletarProcedimento(index, agendamentoIndex) {
-//         agendamentos[agendamentoIndex].procedimentos.splice(index, 1);
-//         salvarAgendamentos();
-//         location.reload(); // Recarrega a página para refletir as alterações após a exclusão
-//     }
 
 
-//     // Função para editar um agendamento
+
 //     function editarAgendamento(index) {
 //         const agendamento = agendamentos[index]; // Obtém o agendamento pelo índice
 
 //         // Abre um modal para edição do agendamento
 //         const modalBody = document.getElementById('modalBody');
 //         const modalTitle = document.getElementById('modalTitle');
-
 
 //         // Preenche o modal com os dados do agendamento para edição
 //         modalTitle.innerText = `Editar Agendamento do Dia ${agendamento.dataSelecionada}`;
@@ -223,6 +216,8 @@
 //         `;
 
 //         const editForm = document.getElementById('editForm');
+//         const newProcedimentoInput = document.getElementById('newProcedimento');
+//         const procedimentosList = document.getElementById('editProcedimentos');
 
 //         editForm.addEventListener('submit', function (event) {
 //             event.preventDefault();
@@ -231,35 +226,62 @@
 //             agendamento.nome = document.getElementById('editNome').value;
 //             agendamento.telefone = document.getElementById('editTelefone').value;
 
-//             // Adiciona novo procedimento se houver
-//             const newProcedimento = document.getElementById('newProcedimento').value.trim();
-//             if (newProcedimento !== '') {
-//                 agendamento.procedimentos.push(newProcedimento);
-//             }
-
 //             // Salva as alterações
 //             salvarAgendamentos();
-
-
 
 //             // Recarrega a página para refletir as alterações
 //             location.reload();
 //             alert("ALTERAÇÕES SALVAS COM SUCESSO!!!")
 //         });
 
-//         // Verifica se o elemento procedimentosList foi encontrado no DOM
-//         const procedimentosList = document.getElementById('editProcedimentos');
-//         if (procedimentosList) {
-//             // Limpa o conteúdo anterior do elemento
-//             procedimentosList.innerHTML = '';
+//         // Adicionar procedimento via botão e formulário
+//         const btnAddProcedimento = document.getElementById('btnAddProcedimento');
 
-//             // Adiciona os procedimentos à lista no modal de edição
+//         btnAddProcedimento.addEventListener('click', function () {
+//             const newProcedimentoValue = newProcedimentoInput.value.trim();
+//             if (newProcedimentoValue !== '') {
+//                 agendamento.procedimentos.push(newProcedimentoValue);
+//                 newProcedimentoInput.value = ''; // Limpa o campo de input após adicionar
+//                 atualizarListaProcedimentos();
+//             }
+//         });
+
+//         // Adicionar procedimento por tecla "Enter"
+//         newProcedimentoInput.addEventListener('keypress', function (event) {
+//             if (event.key === 'Enter') {
+//                 const newProcedimentoValue = newProcedimentoInput.value.trim();
+//                 if (newProcedimentoValue !== '') {
+//                     agendamento.procedimentos.push(newProcedimentoValue);
+//                     newProcedimentoInput.value = ''; // Limpa o campo de input após adicionar
+//                     atualizarListaProcedimentos();
+//                 }
+//             }
+//         });
+
+//         // Função para atualizar a lista de procedimentos exibida no modal
+//         function atualizarListaProcedimentos() {
+//             procedimentosList.innerHTML = '';
 //             agendamento.procedimentos.forEach(procedimento => {
-//                 procedimentosList.innerHTML += `<li class="list-group-item">${procedimento}</li>`;
+//                 procedimentosList.innerHTML += `
+//                     <li class="list-group-item d-flex justify-content-between">
+//                         <span>${procedimento}</span>
+//                         <button class="btn btn-danger btn-sm btn-delete-procedimento">Excluir</button>
+//                     </li>
+//                 `;
 //             });
-//         } else {
-//             console.error('Elemento procedimentosList não encontrado');
+
+//             // Adicionar manipuladores de eventos para os botões de exclusão de procedimentos
+//             const btnsExcluirProcedimento = document.querySelectorAll('.btn-delete-procedimento');
+//             btnsExcluirProcedimento.forEach((btn, procedimentoIndex) => {
+//                 btn.addEventListener('click', function () {
+//                     agendamento.procedimentos.splice(procedimentoIndex, 1);
+//                     atualizarListaProcedimentos(); // Atualiza a lista após a exclusão
+//                 });
+//             });
 //         }
+
+//         // Chamada inicial para exibir os procedimentos ao abrir o modal de edição
+//         atualizarListaProcedimentos();
 
 //         // Exibe o modal
 //         const modal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -269,9 +291,8 @@
 //         modal._element.addEventListener('hidden.bs.modal', function () {
 //             location.reload(); // Recarrega a página após o fechamento do modal
 //         });
-
-
 //     }
+
 
 
 //     // --------------------- Adicionando manipuladores de eventos para os botões de editar e deletar
@@ -336,21 +357,58 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // //=============================== 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===========================================================
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -560,22 +618,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // Função para deletar um procedimento do agendamento
-    function deletarProcedimento(index, agendamentoIndex) {
-        agendamentos[agendamentoIndex].procedimentos.splice(index, 1);
-        salvarAgendamentos();
-        location.reload(); // Recarrega a página para refletir as alterações após a exclusão
-    }
 
 
-    // Função para editar um agendamento
+
     function editarAgendamento(index) {
         const agendamento = agendamentos[index]; // Obtém o agendamento pelo índice
 
         // Abre um modal para edição do agendamento
         const modalBody = document.getElementById('modalBody');
         const modalTitle = document.getElementById('modalTitle');
-
 
         // Preenche o modal com os dados do agendamento para edição
         modalTitle.innerText = `Editar Agendamento do Dia ${agendamento.dataSelecionada}`;
@@ -589,19 +640,49 @@ document.addEventListener('DOMContentLoaded', function () {
                     <label for="editTelefone" class="form-label">Telefone:</label>
                     <input type="text" class="form-control" id="editTelefone" value="${agendamento.telefone}">
                 </div>
-                <div class="mb-3">
-                    <label for="editProcedimentos" class="form-label">Procedimentos:</label>
-                    <ul class="list-group" id="editProcedimentos"></ul>
-                    <div class="input-group mt-3">
-                        <input type="text" class="form-control" id="newProcedimento" placeholder="Novo Procedimento">
-                        <button type="button" class="btn btn-primary" id="btnAddProcedimento">Adicionar</button>
+                <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Toque e Escolha os Procedimentos
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body" id="newProcedimentos">
+                        <!-- Lista de checkboxes para novos procedimentos -->
                     </div>
                 </div>
+            </div>
+            </div>
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
             </form>
         `;
 
         const editForm = document.getElementById('editForm');
+        const newProcedimentoInput = document.getElementById('newProcedimento');
+        const procedimentosList = document.getElementById('editProcedimentos');
+        const newProcedimentosDiv = document.getElementById('newProcedimentos');
+
+        // Adicionar checkboxes para novos procedimentos
+        const procedimentosDisponiveis = [
+            'Corte de cabelo',
+            'Manicure',
+            'Pedicure',
+            'Maquiagem',
+            'Tratamento Facial'
+            // Adicione aqui outros procedimentos disponíveis conforme necessário
+        ];
+
+        procedimentosDisponiveis.forEach((procedimento, idx) => {
+            newProcedimentosDiv.innerHTML += `
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="${idx}" id="checkbox${idx}">
+                    <label class="form-check-label" for="checkbox${idx}">
+                        ${procedimento}
+                    </label>
+                </div>
+            `;
+        });
 
         editForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -610,35 +691,62 @@ document.addEventListener('DOMContentLoaded', function () {
             agendamento.nome = document.getElementById('editNome').value;
             agendamento.telefone = document.getElementById('editTelefone').value;
 
-            // Adiciona novo procedimento se houver
-            const newProcedimento = document.getElementById('newProcedimento').value.trim();
-            if (newProcedimento !== '') {
-                agendamento.procedimentos.push(newProcedimento);
-            }
-
             // Salva as alterações
             salvarAgendamentos();
-
-
 
             // Recarrega a página para refletir as alterações
             location.reload();
             alert("ALTERAÇÕES SALVAS COM SUCESSO!!!")
         });
 
-        // Verifica se o elemento procedimentosList foi encontrado no DOM
-        const procedimentosList = document.getElementById('editProcedimentos');
-        if (procedimentosList) {
-            // Limpa o conteúdo anterior do elemento
-            procedimentosList.innerHTML = '';
+        // Adicionar procedimento via botão e formulário
+        const btnAddProcedimento = document.getElementById('btnAddProcedimento');
 
-            // Adiciona os procedimentos à lista no modal de edição
+        btnAddProcedimento.addEventListener('click', function () {
+            const newProcedimentoValue = newProcedimentoInput.value.trim();
+            if (newProcedimentoValue !== '') {
+                agendamento.procedimentos.push(newProcedimentoValue);
+                newProcedimentoInput.value = ''; // Limpa o campo de input após adicionar
+                atualizarListaProcedimentos();
+            }
+        });
+
+        // Adicionar procedimento por tecla "Enter"
+        newProcedimentoInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                const newProcedimentoValue = newProcedimentoInput.value.trim();
+                if (newProcedimentoValue !== '') {
+                    agendamento.procedimentos.push(newProcedimentoValue);
+                    newProcedimentoInput.value = ''; // Limpa o campo de input após adicionar
+                    atualizarListaProcedimentos();
+                }
+            }
+        });
+
+        // Função para atualizar a lista de procedimentos exibida no modal
+        function atualizarListaProcedimentos() {
+            procedimentosList.innerHTML = '';
             agendamento.procedimentos.forEach(procedimento => {
-                procedimentosList.innerHTML += `<li class="list-group-item">${procedimento}</li>`;
+                procedimentosList.innerHTML += `
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>${procedimento}</span>
+                        <button class="btn btn-danger btn-sm btn-delete-procedimento">Excluir</button>
+                    </li>
+                `;
             });
-        } else {
-            console.error('Elemento procedimentosList não encontrado');
+
+            // Adicionar manipuladores de eventos para os botões de exclusão de procedimentos
+            const btnsExcluirProcedimento = document.querySelectorAll('.btn-delete-procedimento');
+            btnsExcluirProcedimento.forEach((btn, procedimentoIndex) => {
+                btn.addEventListener('click', function () {
+                    agendamento.procedimentos.splice(procedimentoIndex, 1);
+                    atualizarListaProcedimentos(); // Atualiza a lista após a exclusão
+                });
+            });
         }
+
+        // Chamada inicial para exibir os procedimentos ao abrir o modal de edição
+        atualizarListaProcedimentos();
 
         // Exibe o modal
         const modal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -648,9 +756,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modal._element.addEventListener('hidden.bs.modal', function () {
             location.reload(); // Recarrega a página após o fechamento do modal
         });
-
-
     }
+
 
 
     // --------------------- Adicionando manipuladores de eventos para os botões de editar e deletar
