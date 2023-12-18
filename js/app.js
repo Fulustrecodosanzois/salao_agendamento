@@ -280,8 +280,10 @@
 
 
 
+import { app, db } from "./config-firebase.js";
 
 
+document.addEventListener('DOMContentLoaded', function () {
 
 let horarioSelecionado = null; // Definindo a variável no escopo global
 
@@ -426,39 +428,67 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
 
     // Evento de confirmação dentro do modal
     document.getElementById('btnConfirmar').addEventListener('click', function () {
-        // Adicione a lógica de confirmação para armazenar no localStorage
+        const nome = document.getElementById('nome').value;
+        const telefone = document.getElementById('telefone').value;
+        const procedimentosSelecionados = [];
+        
+        // Coletar procedimentos selecionados
+        const procedimentos = document.querySelectorAll('.form-check-input:checked');
+        procedimentos.forEach(procedimento => {
+            procedimentosSelecionados.push(procedimento.nextElementSibling.textContent.trim());
+        });
+    
+        // Verificar se há um horário selecionado
+        if (horarioSelecionado === null) {
+            alert('Por favor, selecione um horário disponível.');
+            return;
+        }
+    
+        const dataSelecionada = document.getElementById('datePicker').value;
+    
+        // Gerar um ID de rastreamento único
+        const idRastreio = generateUniqueID(); // Função para gerar um ID único
+    
+        // Objeto com os dados do agendamento, incluindo o ID de rastreamento
         const novoAgendamento = {
             idRastreio: idRastreio,
             nome: nome,
             telefone: telefone,
             procedimentos: procedimentosSelecionados,
             dataSelecionada: dataSelecionada,
-            horariosSelecionados: horariosSelecionados
+            horarioSelecionado: horarioSelecionado
         };
-
-        // Obtenha os dados do localStorage se já houver algum agendamento
-        let agendamentos = localStorage.getItem('dadosAgendamentos');
-        agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
-
-        // Adicione o novo agendamento à lista de agendamentos
-        agendamentos.push(novoAgendamento);
-
-        // Armazene os dados atualizados no localStorage como JSON
-        localStorage.setItem('dadosAgendamentos', JSON.stringify(agendamentos));
-
-        // Feche o modal de confirmação
-        modalConfirmacao.hide();
-
-        // Recarregue a página para limpar os campos do formulário
-        location.reload();
+    
+        // Adapte para enviar os dados para o Firestore
+        db.collection('agendamentos').add(novoAgendamento)
+            .then((docRef) => {
+                console.log('Agendamento registrado com ID:', docRef.id);
+                // Limpar os campos ou reiniciar a página após o agendamento
+                limparCampos();
+            })
+            .catch((error) => {
+                console.error('Erro ao adicionar agendamento:', error);
+            });
     });
-});
-
-// Função para gerar um ID único (você pode usar uma biblioteca externa ou implementar a sua lógica para criar IDs únicos)
-function generateUniqueID() {
-    // Implemente sua lógica para gerar um ID único, por exemplo:
-    return 'ID-' + Math.random().toString(36).substr(2, 9);
-}
+    
+    // Função para limpar os campos do formulário após o agendamento
+    function limparCampos() {
+        document.getElementById('nome').value = '';
+        document.getElementById('telefone').value = '';
+        // Limpar outros campos conforme necessário
+        // ...
+    
+        // Fechar o modal de confirmação
+        const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
+        modalConfirmacao.hide();
+    }
+    
+    // Função para gerar um ID único
+    function generateUniqueID() {
+        // Implemente sua lógica para gerar um ID único, por exemplo:
+        return 'ID-' + Math.random().toString(36).substr(2, 9);
+    }
+    
 
 
 //=========================== FORMATAR TELEFONE
@@ -523,7 +553,8 @@ document.getElementById('btnConfirmar').addEventListener('click', function () {
     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
 
 });
+})
 
 
 
-
+});
