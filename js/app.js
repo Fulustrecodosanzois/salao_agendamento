@@ -1,5 +1,13 @@
-// let horarioSelecionado = null; // Definindo a variável no escopo global
+// import { app, db } from './config-firebase.js';
+// import { collection, addDoc, getFirestore, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
+
+
+
+
+// let horariosSelecionados = [];
+// let colecaoRef;
+// let horarioSelecionado; // Declare a variável globalmente
 
 
 // function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
@@ -49,6 +57,9 @@
 
 //         horariosDisponiveis.appendChild(label);
 //     }
+
+//     colecaoRef = collection(db, 'nome_da_sua_colecao'); // Substitua 'nome_da_sua_colecao' pelo nome correto da sua coleção no Firestore
+
 // }
 
 
@@ -83,11 +94,7 @@
 
 //     console.log('Horários selecionados:', horariosSelecionados);
 
-
-//     if (horariosSelecionados.length === 0) {
-//         alert('Por favor, selecione um horário disponível.');
-//         return;
-//     }
+//     // Restante do código de validação permanece igual
 
 //     const nome = document.getElementById('nome').value;
 //     const telefone = document.getElementById('telefone').value;
@@ -98,75 +105,56 @@
 //     });
 //     const dataSelecionada = document.getElementById('datePicker').value;
 
-//     let agendamentos = localStorage.getItem('dadosAgendamentos');
-//     agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+//     // Verificação dos horários selecionados na base de dados
+//     const q = query(colecaoRef, where('dataSelecionada', '==', dataSelecionada));
+//     getDocs(q)
+//         .then((querySnapshot) => {
+//             let horariosJaAgendados = false;
+//             querySnapshot.forEach((doc) => {
+//                 const dados = doc.data();
+//                 const horariosAgendados = dados.horariosSelecionados;
+//                 horariosSelecionados.forEach((horarioSelecionado) => {
+//                     if (horariosAgendados.includes(horarioSelecionado)) {
+//                         horariosJaAgendados = true;
+//                     }
+//                 });
+//             });
 
-//     const horariosAgendadosNessaData = agendamentos
-//         .filter(agendamento => agendamento.dataSelecionada === dataSelecionada)
-//         .flatMap(agendamento => agendamento.horariosSelecionados);
+//             if (horariosJaAgendados) {
+//                 alert('Desculpe, este horário já foi agendado por outra pessoa.');
+//                 return;
+//             }
 
-//     // Verificar se os horários selecionados estão disponíveis
-//     let horariosJaAgendados = false;
-//     horariosSelecionados.forEach(horarioSelecionado => {
-//         if (horariosAgendadosNessaData.includes(horarioSelecionado.textContent)) {
-//             horariosJaAgendados = true;
-//         }
-//     });
+//             // Continuação do código de envio para o Firestore permanece igual
 
-//     if (horariosJaAgendados) {
-//         alert('Desculpe, este horário já foi agendado por outra pessoa.');
-//         return;
-//     }
+//             const dadosAgendamento = {
+//                 idRastreio: generateUniqueID(),
+//                 nome: nome,
+//                 telefone: telefone,
+//                 procedimentos: procedimentosSelecionados,
+//                 dataSelecionada: dataSelecionada,
+//                 horariosSelecionados: horariosSelecionados
+//             };
 
-//     const horariosSelecionadosArray = Array.from(horariosSelecionados).map(horario => horario.textContent);
+//             addDoc(colecaoRef, dadosAgendamento)
+//                 .then(() => {
+//                     // Limpar os campos do formulário após o agendamento ser enviado com sucesso
+//                     document.getElementById('nome').value = '';
+//                     document.getElementById('telefone').value = '';
+//                     // ... (limpar outros campos, se necessário)
 
-//     // Crie uma string com os dados do agendamento
-//     const dadosAgendamento = `
-//         <p><strong>Nome:</strong> ${nome}</p>
-//         <p><strong>Telefone:</strong> ${telefone}</p>
-//         <p><strong>Procedimentos:</strong> ${procedimentosSelecionados.join(', ')}</p>
-//         <p><strong>Data Selecionada:</strong> ${dataSelecionada}</p>
-//         <p><strong>Horários Selecionados:</strong> ${horariosSelecionados.join(', ')}</p>
-//     `;
-
-//     // Insira os dados do agendamento no modal
-//     document.getElementById('dadosConfirmacao').innerHTML = dadosAgendamento;
-
-//     // Exibir o modal de confirmação
-//     const modalConfirmacao = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
-//     modalConfirmacao.show();
-
-//     // Criar um ID de rastreamento único para o novo agendamento
-//     const idRastreio = generateUniqueID(); // Função para gerar um ID único
-
-//     // Evento de confirmação dentro do modal
-//     document.getElementById('btnConfirmar').addEventListener('click', function () {
-//         // Adicione a lógica de confirmação para armazenar no localStorage
-//         const novoAgendamento = {
-//             idRastreio: idRastreio,
-//             nome: nome,
-//             telefone: telefone,
-//             procedimentos: procedimentosSelecionados,
-//             dataSelecionada: dataSelecionada,
-//             horariosSelecionados: horariosSelecionados
-//         };
-
-//         // Obtenha os dados do localStorage se já houver algum agendamento
-//         let agendamentos = localStorage.getItem('dadosAgendamentos');
-//         agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
-
-//         // Adicione o novo agendamento à lista de agendamentos
-//         agendamentos.push(novoAgendamento);
-
-//         // Armazene os dados atualizados no localStorage como JSON
-//         localStorage.setItem('dadosAgendamentos', JSON.stringify(agendamentos));
-
-//         // Feche o modal de confirmação
-//         modalConfirmacao.hide();
-
-//         // Recarregue a página para limpar os campos do formulário
-//         location.reload();
-//     });
+//                     console.log('Agendamento enviado com sucesso!');
+//                     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!");
+//                 })
+//                 .catch((error) => {
+//                     console.error('Erro ao enviar o agendamento:', error);
+//                     alert("Ocorreu um erro ao realizar o agendamento. Tente novamente.");
+//                 });
+//         })
+//         .catch((error) => {
+//             console.error('Erro ao verificar horários agendados:', error);
+//             alert("Ocorreu um erro ao verificar os horários agendados. Tente novamente.");
+//         });
 // });
 
 // // Função para gerar um ID único (você pode usar uma biblioteca externa ou implementar a sua lógica para criar IDs únicos)
@@ -257,7 +245,12 @@
 
 
 
-//===========================================================
+
+
+
+
+
+//=============================================================
 
 
 
@@ -279,19 +272,28 @@
 
 
 
+import { app, db } from './config-firebase.js';
+import { collection, addDoc, getFirestore, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-import { app, db } from "./config-firebase.js";
 
 
-document.addEventListener('DOMContentLoaded', function () {
 
-let horarioSelecionado = null; // Definindo a variável no escopo global
 
+let horariosSelecionados = [];
+let colecaoRef;
+let horarioSelecionado; // Declare a variável globalmente
 
 
 function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
+    const hoje = new Date(); // Obtém a data atual
     const dataSelecionada = new Date(dateStr);
     const horariosDisponiveis = document.getElementById('horariosDisponiveis');
+
+
+    if (dataSelecionada < hoje) {
+        instance.setDate(hoje); // Define a data atual como a data selecionada
+        return;
+    }
 
     // Limpar os horários disponíveis anteriores
     horariosDisponiveis.innerHTML = '';
@@ -336,6 +338,9 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
 
         horariosDisponiveis.appendChild(label);
     }
+
+    colecaoRef = collection(db, 'nome_da_sua_colecao'); // Substitua 'nome_da_sua_colecao' pelo nome correto da sua coleção no Firestore
+
 }
 
 
@@ -370,11 +375,7 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
 
     console.log('Horários selecionados:', horariosSelecionados);
 
-
-    if (horariosSelecionados.length === 0) {
-        alert('Por favor, selecione um horário disponível.');
-        return;
-    }
+    // Restante do código de validação permanece igual
 
     const nome = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
@@ -385,110 +386,65 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
     });
     const dataSelecionada = document.getElementById('datePicker').value;
 
-    let agendamentos = localStorage.getItem('dadosAgendamentos');
-    agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
-
-    const horariosAgendadosNessaData = agendamentos
-        .filter(agendamento => agendamento.dataSelecionada === dataSelecionada)
-        .flatMap(agendamento => agendamento.horariosSelecionados);
-
-    // Verificar se os horários selecionados estão disponíveis
-    let horariosJaAgendados = false;
-    horariosSelecionados.forEach(horarioSelecionado => {
-        if (horariosAgendadosNessaData.includes(horarioSelecionado.textContent)) {
-            horariosJaAgendados = true;
-        }
-    });
-
-    if (horariosJaAgendados) {
-        alert('Desculpe, este horário já foi agendado por outra pessoa.');
-        return;
-    }
-
-    const horariosSelecionadosArray = Array.from(horariosSelecionados).map(horario => horario.textContent);
-
-    // Crie uma string com os dados do agendamento
-    const dadosAgendamento = `
-        <p><strong>Nome:</strong> ${nome}</p>
-        <p><strong>Telefone:</strong> ${telefone}</p>
-        <p><strong>Procedimentos:</strong> ${procedimentosSelecionados.join(', ')}</p>
-        <p><strong>Data Selecionada:</strong> ${dataSelecionada}</p>
-        <p><strong>Horários Selecionados:</strong> ${horariosSelecionados.join(', ')}</p>
-    `;
-
-    // Insira os dados do agendamento no modal
-    document.getElementById('dadosConfirmacao').innerHTML = dadosAgendamento;
-
-    // Exibir o modal de confirmação
-    const modalConfirmacao = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
-    modalConfirmacao.show();
-
-    // Criar um ID de rastreamento único para o novo agendamento
-    const idRastreio = generateUniqueID(); // Função para gerar um ID único
-
-    // Evento de confirmação dentro do modal
-    document.getElementById('btnConfirmar').addEventListener('click', function () {
-        const nome = document.getElementById('nome').value;
-        const telefone = document.getElementById('telefone').value;
-        const procedimentosSelecionados = [];
-        
-        // Coletar procedimentos selecionados
-        const procedimentos = document.querySelectorAll('.form-check-input:checked');
-        procedimentos.forEach(procedimento => {
-            procedimentosSelecionados.push(procedimento.nextElementSibling.textContent.trim());
-        });
-    
-        // Verificar se há um horário selecionado
-        if (horarioSelecionado === null) {
-            alert('Por favor, selecione um horário disponível.');
-            return;
-        }
-    
-        const dataSelecionada = document.getElementById('datePicker').value;
-    
-        // Gerar um ID de rastreamento único
-        const idRastreio = generateUniqueID(); // Função para gerar um ID único
-    
-        // Objeto com os dados do agendamento, incluindo o ID de rastreamento
-        const novoAgendamento = {
-            idRastreio: idRastreio,
-            nome: nome,
-            telefone: telefone,
-            procedimentos: procedimentosSelecionados,
-            dataSelecionada: dataSelecionada,
-            horarioSelecionado: horarioSelecionado
-        };
-    
-        // Adapte para enviar os dados para o Firestore
-        db.collection('agendamentos').add(novoAgendamento)
-            .then((docRef) => {
-                console.log('Agendamento registrado com ID:', docRef.id);
-                // Limpar os campos ou reiniciar a página após o agendamento
-                limparCampos();
-            })
-            .catch((error) => {
-                console.error('Erro ao adicionar agendamento:', error);
+    // Verificação dos horários selecionados na base de dados
+    const q = query(colecaoRef, where('dataSelecionada', '==', dataSelecionada));
+    getDocs(q)
+        .then((querySnapshot) => {
+            let horariosJaAgendados = false;
+            querySnapshot.forEach((doc) => {
+                const dados = doc.data();
+                const horariosAgendados = dados.horariosSelecionados;
+                horariosSelecionados.forEach((horarioSelecionado) => {
+                    if (horariosAgendados.includes(horarioSelecionado)) {
+                        horariosJaAgendados = true;
+                    }
+                });
             });
-    });
-    
-    // Função para limpar os campos do formulário após o agendamento
-    function limparCampos() {
-        document.getElementById('nome').value = '';
-        document.getElementById('telefone').value = '';
-        // Limpar outros campos conforme necessário
-        // ...
-    
-        // Fechar o modal de confirmação
-        const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
-        modalConfirmacao.hide();
-    }
-    
-    // Função para gerar um ID único
-    function generateUniqueID() {
-        // Implemente sua lógica para gerar um ID único, por exemplo:
-        return 'ID-' + Math.random().toString(36).substr(2, 9);
-    }
-    
+
+            if (horariosJaAgendados) {
+                alert('Desculpe, este horário já foi agendado por outra pessoa.');
+                return;
+            }
+
+            // Continuação do código de envio para o Firestore permanece igual
+
+            const dadosAgendamento = {
+                idRastreio: generateUniqueID(),
+                nome: nome,
+                telefone: telefone,
+                procedimentos: procedimentosSelecionados,
+                dataSelecionada: dataSelecionada,
+                horariosSelecionados: horariosSelecionados
+            };
+
+            addDoc(colecaoRef, dadosAgendamento)
+                .then(() => {
+                    // Limpar os campos do formulário após o agendamento ser enviado com sucesso
+                    document.getElementById('nome').value = '';
+                    document.getElementById('telefone').value = '';
+                    // ... (limpar outros campos, se necessário)
+
+                    console.log('Agendamento enviado com sucesso!');
+                    alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!");
+
+                    
+                })
+                .catch((error) => {
+                    console.error('Erro ao enviar o agendamento:', error);
+                    alert("Ocorreu um erro ao realizar o agendamento. Tente novamente.");
+                });
+        })
+        .catch((error) => {
+            console.error('Erro ao verificar horários agendados:', error);
+            alert("Ocorreu um erro ao verificar os horários agendados. Tente novamente.");
+        });
+});
+
+// Função para gerar um ID único (você pode usar uma biblioteca externa ou implementar a sua lógica para criar IDs únicos)
+function generateUniqueID() {
+    // Implemente sua lógica para gerar um ID único, por exemplo:
+    return 'ID-' + Math.random().toString(36).substr(2, 9);
+}
 
 
 //=========================== FORMATAR TELEFONE
@@ -553,8 +509,36 @@ document.getElementById('btnConfirmar').addEventListener('click', function () {
     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
 
 });
-})
 
 
 
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

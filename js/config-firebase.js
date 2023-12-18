@@ -4,12 +4,12 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.5.0/firebase
 
 // Configuração do Firebase para o seu aplicativo da web
 const firebaseConfig = {
-    apiKey: "AIzaSyCx_BnG-rWyX4VbRkeWFCnGdQ4KY5SMzmE",
-    authDomain: "salao-43b7d.firebaseapp.com",
-    projectId: "salao-43b7d",
-    storageBucket: "salao-43b7d.appspot.com",
-    messagingSenderId: "756116065361",
-    appId: "1:756116065361:web:7695977313a71c4413fc70"
+    apiKey: "AIzaSyB5S4ENke_2XupAsHTxUUHiwHy184Re0Ns",
+    authDomain: "agendamento-39c98.firebaseapp.com",
+    projectId: "agendamento-39c98",
+    storageBucket: "agendamento-39c98.appspot.com",
+    messagingSenderId: "209641895513",
+    appId: "1:209641895513:web:6e5e31606d6e27a15ae348"
 };
 
 const app = initializeApp(firebaseConfig);
