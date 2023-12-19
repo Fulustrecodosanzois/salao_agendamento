@@ -275,7 +275,7 @@ import { collection, addDoc, getFirestore, query, where, getDocs } from "https:/
 
 let horariosSelecionados = [];
 const colecaoRef = collection(db, 'agendamentos');
-let horarioSelecionado; 
+let horarioSelecionado;
 
 
 function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
@@ -454,9 +454,15 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
                     // Event listener para fechar o modal ao clicar no botão de fechar
                     $(document).on('click', '[data-dismiss="modal"]', function () {
                         $('#infoAgendamentoModal').modal('hide');
+
+                        // Após fechar o modal, exibir um alerta e atualizar a página
+                        alert('Agendamento realizado com sucesso!');
+                        location.reload(); // Atualiza a página
+
                     });
 
                     console.log('Agendamento enviado com sucesso!');
+
                 })
                 .catch((error) => {
                     // Tratamento de erro ao enviar o agendamento
@@ -469,66 +475,66 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
 
 
 
-    //----------------------------------------- Função para gerar um ID único
+//----------------------------------------- Função para gerar um ID único
 
 
-    
-    function generateUniqueID() {
-        // Implemente sua lógica para gerar um ID único, por exemplo:
-        return 'ID-' + Math.random().toString(36).substr(2, 9);
-    }
+
+function generateUniqueID() {
+    // Implemente sua lógica para gerar um ID único, por exemplo:
+    return 'ID-' + Math.random().toString(36).substr(2, 9);
+}
 
 
-    //=========================== FORMATAR TELEFONE
+//=========================== FORMATAR TELEFONE
 
 
-    // Função para formatar o número de telefone enquanto o usuário digita
-    const telefoneInput = document.getElementById('telefone');
-    telefoneInput.addEventListener('input', function (event) {
-        const input = event.target;
-        const value = input.value.replace(/\D/g, ''); // Remove todos os caracteres que não são dígitos
-        const formattedValue = formatarTelefone(value); // Formata o número de telefone
-        input.value = formattedValue;
+// Função para formatar o número de telefone enquanto o usuário digita
+const telefoneInput = document.getElementById('telefone');
+telefoneInput.addEventListener('input', function (event) {
+    const input = event.target;
+    const value = input.value.replace(/\D/g, ''); // Remove todos os caracteres que não são dígitos
+    const formattedValue = formatarTelefone(value); // Formata o número de telefone
+    input.value = formattedValue;
+});
+
+// =============================   FORMATAÇÃO DO TELEFONE
+
+function formatarTelefone(value) {
+    // Expressão regular para formatar o telefone no padrão (XX) XXXXX XXXX
+    const regex = /^(\d{2})(\d{1})(\d{4})(\d{4})$/;
+    const subst = '($1) $2 $3 $4';
+    return value.replace(regex, subst);
+}
+
+
+// Função para carregar os horários disponíveis e bloquear os já agendados
+
+function carregarHorariosDisponiveis() {
+    // Obter a data selecionada
+    const dataSelecionada = document.getElementById('datePicker').value;
+
+    // Obter os dados do localStorage se já houver algum agendamento
+    let agendamentos = localStorage.getItem('dadosAgendamentos');
+    agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
+
+    const horariosAgendadosNessaData = agendamentos
+        .filter(agendamento => agendamento.dataSelecionada === dataSelecionada)
+        .flatMap(agendamento => agendamento.horariosSelecionados);
+
+    const horariosDisponiveis = document.querySelectorAll('.horario-disponivel');
+
+    // Exibir apenas os horários disponíveis (não agendados) para essa data
+    horariosDisponiveis.forEach(horario => {
+        if (horariosAgendadosNessaData.includes(horario.textContent)) {
+            horario.style.display = 'none';
+        } else {
+            horario.style.display = 'block';
+        }
     });
+}
 
-    // =============================   FORMATAÇÃO DO TELEFONE
+// Chamar a função quando a data for alterada no datepicker
+document.getElementById('datePicker').addEventListener('change', carregarHorariosDisponiveis);
 
-    function formatarTelefone(value) {
-        // Expressão regular para formatar o telefone no padrão (XX) XXXXX XXXX
-        const regex = /^(\d{2})(\d{1})(\d{4})(\d{4})$/;
-        const subst = '($1) $2 $3 $4';
-        return value.replace(regex, subst);
-    }
-
-
-    // Função para carregar os horários disponíveis e bloquear os já agendados
-
-    function carregarHorariosDisponiveis() {
-        // Obter a data selecionada
-        const dataSelecionada = document.getElementById('datePicker').value;
-
-        // Obter os dados do localStorage se já houver algum agendamento
-        let agendamentos = localStorage.getItem('dadosAgendamentos');
-        agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
-
-        const horariosAgendadosNessaData = agendamentos
-            .filter(agendamento => agendamento.dataSelecionada === dataSelecionada)
-            .flatMap(agendamento => agendamento.horariosSelecionados);
-
-        const horariosDisponiveis = document.querySelectorAll('.horario-disponivel');
-
-        // Exibir apenas os horários disponíveis (não agendados) para essa data
-        horariosDisponiveis.forEach(horario => {
-            if (horariosAgendadosNessaData.includes(horario.textContent)) {
-                horario.style.display = 'none';
-            } else {
-                horario.style.display = 'block';
-            }
-        });
-    }
-
-    // Chamar a função quando a data for alterada no datepicker
-    document.getElementById('datePicker').addEventListener('change', carregarHorariosDisponiveis);
-
-    // Chamar a função para carregar os horários disponíveis inicialmente
-    carregarHorariosDisponiveis();
+// Chamar a função para carregar os horários disponíveis inicialmente
+carregarHorariosDisponiveis();
