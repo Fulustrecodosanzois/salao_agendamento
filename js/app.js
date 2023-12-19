@@ -371,7 +371,9 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
     // Restante do código de validação permanece igual
 
     const nome = document.getElementById('nome').value;
+    const nome2 = document.querySelector('nome');
     const telefone = document.getElementById('telefone').value;
+    const telefone2 = document.querySelector('telefone');
     const procedimentosSelecionados = [];
     const procedimentos = document.querySelectorAll('.form-check-input:checked');
     procedimentos.forEach(procedimento => {
@@ -470,6 +472,33 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
                     alert('Erro ao enviar o agendamento. Por favor, tente novamente.');
                 });
         });
+
+
+        //===================================  AUTENTICAÇÕES
+
+
+        // Pega todos os campos que requerem validação
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        
+        // Verifica se todos os campos foram preenchidos ou marcados
+        if (nome2.value.trim() === '' || telefone2.value.trim() === '') {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            event.preventDefault(); // Impede o envio do formulário se campos estiverem vazios
+            return;
+        }
+
+        let allChecked = true;
+        checkboxes.forEach(function (checkbox) {
+            if (!checkbox.checked) {
+                allChecked = false;
+            }
+        });
+
+        if (!allChecked) {
+            alert('Por favor, marque todos os procedimentos desejados.');
+            event.preventDefault(); // Impede o envio do formulário se algum checkbox não estiver marcado
+        }
 });
 
 
