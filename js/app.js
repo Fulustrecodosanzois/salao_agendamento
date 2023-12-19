@@ -6,8 +6,8 @@
 
 
 // let horariosSelecionados = [];
-// let colecaoRef;
-// let horarioSelecionado; // Declare a variável globalmente
+// const colecaoRef = collection(db, 'agendamentos');
+// let horarioSelecionado;
 
 
 // function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
@@ -65,7 +65,6 @@
 //         horariosDisponiveis.appendChild(label);
 //     }
 
-//     colecaoRef = collection(db, 'nome_da_sua_colecao'); // Substitua 'nome_da_sua_colecao' pelo nome correto da sua coleção no Firestore
 
 // }
 
@@ -104,7 +103,9 @@
 //     // Restante do código de validação permanece igual
 
 //     const nome = document.getElementById('nome').value;
+//     const nome2 = document.querySelector('nome');
 //     const telefone = document.getElementById('telefone').value;
+//     const telefone2 = document.querySelector('telefone');
 //     const procedimentosSelecionados = [];
 //     const procedimentos = document.querySelectorAll('.form-check-input:checked');
 //     procedimentos.forEach(procedimento => {
@@ -145,28 +146,100 @@
 
 //             addDoc(colecaoRef, dadosAgendamento)
 //                 .then(() => {
-//                     // Limpar os campos do formulário após o agendamento ser enviado com sucesso
-//                     document.getElementById('nome').value = '';
-//                     document.getElementById('telefone').value = '';
-//                     // ... (limpar outros campos, se necessário)
 
 //                     console.log('Agendamento enviado com sucesso!');
-//                     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!");
+//                     const modalContent =
+//                         `<div class="modal fade" id="infoAgendamentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+//                         <div class="modal-dialog" role="document">
+//                             <div class="modal-content">
+//                                 <div class="modal-header">
+//                                     <h5 class="modal-title" id="exampleModalLabel">Detalhes do Agendamento</h5>
+//                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//                                         <span aria-hidden="true">&times;</span>
+//                                     </button>
+//                                 </div>
+//                                 <div class="modal-body">
+//                                     <p><strong>ID de Rastreamento:</strong> ${dadosAgendamento.idRastreio}</p>
+//                                     <p><strong>Nome:</strong> ${dadosAgendamento.nome}</p>
+//                                     <p><strong>Telefone:</strong> ${dadosAgendamento.telefone}</p>
+//                                     <p><strong>Procedimentos:</strong> ${dadosAgendamento.procedimentos}</p>
+//                                     <p><strong>Data Selecionada:</strong> ${dadosAgendamento.dataSelecionada}</p>
+//                                     <p><strong>Horários Selecionados:</strong> ${dadosAgendamento.horariosSelecionados}</p>
+//                                 </div>
+//                                 <div class="modal-footer">
+//                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>`;
 
+//                     // Remove o modal existente antes de inserir um novo
+//                     const existingModal = document.getElementById('infoAgendamentoModal');
+//                     if (existingModal) {
+//                         existingModal.remove();
+//                     }
+
+//                     // Adiciona o modal ao final do body do documento
+//                     document.body.insertAdjacentHTML('beforeend', modalContent);
+
+//                     // Mostra o modal após o agendamento ser enviado com sucesso
+//                     $('#infoAgendamentoModal').modal('show');
+
+//                     // Event listener para fechar o modal ao clicar no botão de fechar
+//                     $(document).on('click', '[data-dismiss="modal"]', function () {
+//                         $('#infoAgendamentoModal').modal('hide');
+
+//                         // Após fechar o modal, exibir um alerta e atualizar a página
+//                         alert('Agendamento realizado com sucesso!');
+//                         location.reload(); // Atualiza a página
+
+//                     });
+
+//                     console.log('Agendamento enviado com sucesso!');
 
 //                 })
 //                 .catch((error) => {
+//                     // Tratamento de erro ao enviar o agendamento
 //                     console.error('Erro ao enviar o agendamento:', error);
-//                     alert("Ocorreu um erro ao realizar o agendamento. Tente novamente.");
+//                     alert('Erro ao enviar o agendamento. Por favor, tente novamente.');
 //                 });
-//         })
-//         .catch((error) => {
-//             console.error('Erro ao verificar horários agendados:', error);
-//             alert("Ocorreu um erro ao verificar os horários agendados. Tente novamente.");
 //         });
+
+
+//         //===================================  AUTENTICAÇÕES
+
+
+//         // Pega todos os campos que requerem validação
+//         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        
+//         // Verifica se todos os campos foram preenchidos ou marcados
+//         if (nome2.value.trim() === '' || telefone2.value.trim() === '') {
+//             alert('Por favor, preencha todos os campos obrigatórios.');
+//             event.preventDefault(); // Impede o envio do formulário se campos estiverem vazios
+//             return;
+//         }
+
+//         let allChecked = true;
+//         checkboxes.forEach(function (checkbox) {
+//             if (!checkbox.checked) {
+//                 allChecked = false;
+//             }
+//         });
+
+//         if (!allChecked) {
+//             alert('Por favor, marque todos os procedimentos desejados.');
+//             event.preventDefault(); // Impede o envio do formulário se algum checkbox não estiver marcado
+//         }
 // });
 
-// // Função para gerar um ID único (você pode usar uma biblioteca externa ou implementar a sua lógica para criar IDs únicos)
+
+
+
+// //----------------------------------------- Função para gerar um ID único
+
+
+
 // function generateUniqueID() {
 //     // Implemente sua lógica para gerar um ID único, por exemplo:
 //     return 'ID-' + Math.random().toString(36).substr(2, 9);
@@ -185,6 +258,8 @@
 //     input.value = formattedValue;
 // });
 
+// // =============================   FORMATAÇÃO DO TELEFONE
+
 // function formatarTelefone(value) {
 //     // Expressão regular para formatar o telefone no padrão (XX) XXXXX XXXX
 //     const regex = /^(\d{2})(\d{1})(\d{4})(\d{4})$/;
@@ -194,6 +269,7 @@
 
 
 // // Função para carregar os horários disponíveis e bloquear os já agendados
+
 // function carregarHorariosDisponiveis() {
 //     // Obter a data selecionada
 //     const dataSelecionada = document.getElementById('datePicker').value;
@@ -225,16 +301,6 @@
 // carregarHorariosDisponiveis();
 
 
-// // Evento de confirmação dentro do modal
-// document.getElementById('btnConfirmar').addEventListener('click', function () {
-//     // Adicione a lógica de confirmação (ex: enviar dados para o servidor, etc.)
-//     // Feche o modal de confirmação se necessário
-//     const modalConfirmacao = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacao'));
-//     modalConfirmacao.hide();
-
-//     alert("AGENDAMENTO REALIZADO COM SUCESSO! OBRIGADO!")
-
-// });
 
 
 
@@ -256,10 +322,7 @@
 
 
 
-//========================================================
-
-
-
+//=============================================================
 
 
 
@@ -567,3 +630,6 @@ document.getElementById('datePicker').addEventListener('change', carregarHorario
 
 // Chamar a função para carregar os horários disponíveis inicialmente
 carregarHorariosDisponiveis();
+
+
+
