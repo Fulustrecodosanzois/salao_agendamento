@@ -438,12 +438,23 @@
 
 import { app, db } from './config-firebase.js';
 import { collection, addDoc, getFirestore, query, where, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
 
 
+
+
+
+
+
+
+//============================ CÓDIGO
 
 document.addEventListener('DOMContentLoaded', function () {
 
+
+    const colecaoRef = collection(db, 'agendamentos');
     const agendamentosRef = collection(db, 'agendamentos');
+
     getDocs(agendamentosRef)
         .then(querySnapshot => {
             const agendamentos = querySnapshot.docs.map(doc => doc.data());
@@ -637,61 +648,68 @@ document.addEventListener('DOMContentLoaded', function () {
 
             function salvarAgendamentos() {
                 const colecaoRef = collection(db, 'agendamentos');
-                const agendamentos = JSON.parse(localStorage.getItem('dadosAgendamentos')) || [];
+                const agendamentosLocal = JSON.parse(localStorage.getItem('dadosAgendamentos')) || [];
 
                 // Envia os agendamentos para o Firestore
-                agendamentos.forEach(agendamento => {
-                    addDoc(colecaoRef, agendamento)
-                        .then(() => {
-                            console.log('Agendamento salvo no Firestore:', agendamento);
-                        })
-                        .catch((error) => {
-                            console.error('Erro ao salvar agendamento no Firestore:', error);
-                        });
+                agendamentosLocal.forEach(agendamento => {
+                    // Verifica se o ID do agendamento é válido antes de adicionar no Firestore
+                    if (agendamento.id && typeof agendamento.id === 'string' && agendamento.id.trim() !== '') {
+                        addDoc(colecaoRef, agendamento)
+                            .then(() => {
+                                console.log('Agendamento salvo no Firestore:', agendamento);
+                            })
+                            .catch((error) => {
+                                console.error('Erro ao salvar agendamento no Firestore:', error);
+                            });
+                    } else {
+                        console.error('ID do agendamento inválido!');
+                        // Lidar com a situação em que o ID do agendamento não é válido
+                    }
                 });
             }
 
 
 
-            // Função para deletar um agendamento / FIREBASE
+            // Função para deletar um agendamento no Firebase
             function deletarAgendamento(index, colecaoRef) {
                 const agendamentoSelecionado = agendamentos[index];
-          
-                const dataSelecionada = agendamentoSelecionado.dataSelecionada;
-                const horariosSelecionados = agendamentoSelecionado.horariosSelecionados || []; // Certifique-se de que é uma matriz
-          
-                const q = query(
-                  colecaoRef,
-                  where('dataSelecionada', '==', dataSelecionada),
-                  where('horariosSelecionados', 'array-contains-any', horariosSelecionados)
-                );
-          
-                getDocs(q)
-                  .then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                      deleteDoc(doc.ref)
-                        .then(() => {
-                          console.log('Agendamento removido do Firebase com sucesso!');
-                        })
-                        .catch(error => {
-                          console.error('Erro ao remover o agendamento do Firebase:', error);
-                        });
-                    });
-                  })
-                  .catch(error => {
-                    console.error('Erro ao buscar o agendamento no Firebase:', error);
-                  });
-          
-                agendamentos.splice(index, 1);
-                salvarAgendamentos();
-                location.reload();
-              }
 
+                // Verifica se o agendamento e seu ID são válidos antes de deletar no Firestore
+                if (agendamentoSelecionado && agendamentoSelecionado.idRastreio) {
+                    const agendamentoId = agendamentoSelecionado.idRastreio;
+
+                    const consulta = query(colecaoRef, where("idRastreio", "==", agendamentoId));
+
+                    getDocs(consulta)
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                deleteDoc(doc.ref)
+                                    .then(() => {
+                                        console.log('Agendamento removido do Firebase com sucesso!');
+                                        alert("AGENDAMENTO EXCLUIDO COM SUCESSO!!!")
+                                        agendamentos.splice(index, 1);
+                                        location.reload(); // Recarrega a página após a remoção
+                                    })
+                                    .catch((error) => {
+                                        console.error('Erro ao remover o agendamento do Firebase:', error);
+                                    });
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Erro ao buscar o agendamento para remoção:', error);
+                        });
+                } else {
+                    console.error('Agendamento ou ID do agendamento não encontrado!');
+                    // Lidar com a situação em que o agendamento ou seu ID não são encontrados
+                }
+            }
 
 
 
 
             //======================= EDITAR AGENDAMENTO JÁ SALVO / FIREBASE
+
+
             function editarAgendamento(index) {
                 const agendamento = agendamentos[index]; // Obtém o agendamento pelo índice
 
@@ -777,30 +795,59 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
+
                 // Função para atualizar a lista de procedimentos exibida no modal
+
+
                 function atualizarListaProcedimentos() {
                     procedimentosList.innerHTML = '';
-                    agendamento.procedimentos.forEach(procedimento => {
+                    agendamento.procedimentos.forEach((procedimento, procedimentoIndex) => {
                         procedimentosList.innerHTML += `
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>${procedimento}</span>
-                        <button class="btn btn-danger btn-sm btn-delete-procedimento">Excluir</button>
-                    </li>
-                `;
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>${procedimento}</span>
+                                <button class="btn btn-danger btn-sm btn-delete-procedimento" data-procedimento-index="${procedimentoIndex}">Excluir</button>
+                            </li>
+                        `;
                     });
 
                     // Adicionar manipuladores de eventos para os botões de exclusão de procedimentos
                     const btnsExcluirProcedimento = document.querySelectorAll('.btn-delete-procedimento');
-                    btnsExcluirProcedimento.forEach((btn, procedimentoIndex) => {
-                        btn.addEventListener('click', function () {
+                    btnsExcluirProcedimento.forEach(btn => {
+                        btn.addEventListener('click', function (event) {
+                            const procedimentoIndex = event.target.getAttribute('data-procedimento-index');
+
+                            // Remove o procedimento da lista localmente
                             agendamento.procedimentos.splice(procedimentoIndex, 1);
-                            atualizarListaProcedimentos(); // Atualiza a lista após a exclusão
+
+                            // Atualiza a lista após a exclusão na interface do usuário
+                            atualizarListaProcedimentos();
+
+                            // Verifica se o ID do documento está presente e não é uma string vazia
+                            if (agendamento.id && typeof agendamento.id === 'string' && agendamento.id.trim() !== '') {
+                                const docRef = doc(colecaoRef, agendamento.id);
+
+                                // Atualiza o campo de procedimentos no documento no Firestore
+                                updateDoc(docRef, {
+                                    procedimentos: agendamento.procedimentos
+                                })
+                                    .then(() => {
+                                        console.log('Procedimento removido com sucesso no Firestore!');
+                                    })
+                                    .catch(error => {
+                                        console.error('Erro ao remover procedimento no Firestore:', error);
+                                    });
+                            } else {
+                                console.error('ID do documento inválido!');
+                            }
                         });
                     });
                 }
 
+
+
                 // Chamada inicial para exibir os procedimentos ao abrir o modal de edição
                 atualizarListaProcedimentos();
+
 
                 // Exibe o modal
                 const modal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -821,7 +868,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (event.target.classList.contains('btn-delete')) {
                     const index = parseInt(event.target.getAttribute('data-index'), 10);
                     if (!isNaN(index)) {
-                        deletarAgendamento(index, agendamentosRef); // Pass agendamentosRef as an argument
+                        deletarAgendamento(index, colecaoRef); // Chame a função deletarAgendamento passando o índice e a referência da coleção
                     }
                 }
 
@@ -846,17 +893,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    //=======================================  VOLTA AO TOPO
-
-
-    function topFunctionModal() {
-        document.body.scrollTop = 0; // Para navegadores que não suportam scrollTop
-        document.documentElement.scrollTop = 0; // Para navegadores compatíveis com scrollTop
-    }
-
-
-
-//=============================== 
 
 
 
@@ -865,6 +901,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+
+    //=============================== 
 
 
 })
+
+
+//=======================================  VOLTA AO TOPO
+
+
+// Função para rolar a página para o topo
+function topFunctionModal() {
+    document.body.scrollTop = 0; // Para navegadores que não suportam 'document.documentElement'
+    document.documentElement.scrollTop = 0; // Para navegadores que suportam 'document.documentElement'
+}
+
+
