@@ -1,7 +1,6 @@
 // import { app, db } from './config-firebase.js';
 // import { collection, addDoc, getFirestore, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-
-
+// import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'; // Importando a função UUID v4
 
 
 
@@ -133,10 +132,15 @@
 //                 return;
 //             }
 
-//             // Continuação do código de envio para o Firestore permanece igual
+
+//             // Geração de um ID único para o agendamento
+
+
+//             const idRastreio = uuidv4();
+
 
 //             const dadosAgendamento = {
-//                 idRastreio: generateUniqueID(),
+//                 idRastreio: idRastreio, // Inclusão do ID único no objeto de agendamento
 //                 nome: nome,
 //                 telefone: telefone,
 //                 procedimentos: procedimentosSelecionados,
@@ -206,31 +210,31 @@
 //         });
 
 
-//         //===================================  AUTENTICAÇÕES
+//     //===================================  AUTENTICAÇÕES
 
 
-//         // Pega todos os campos que requerem validação
-//         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+//     // Pega todos os campos que requerem validação
+//     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
 
-//         // Verifica se todos os campos foram preenchidos ou marcados
-//         if (nome2.value.trim() === '' || telefone2.value.trim() === '') {
-//             alert('Por favor, preencha todos os campos obrigatórios.');
-//             event.preventDefault(); // Impede o envio do formulário se campos estiverem vazios
-//             return;
+//     // Verifica se todos os campos foram preenchidos ou marcados
+//     if (nome2.value.trim() === '' || telefone2.value.trim() === '') {
+//         alert('Por favor, preencha todos os campos obrigatórios.');
+//         event.preventDefault(); // Impede o envio do formulário se campos estiverem vazios
+//         return;
+//     }
+
+//     let allChecked = true;
+//     checkboxes.forEach(function (checkbox) {
+//         if (!checkbox.checked) {
+//             allChecked = false;
 //         }
+//     });
 
-//         let allChecked = true;
-//         checkboxes.forEach(function (checkbox) {
-//             if (!checkbox.checked) {
-//                 allChecked = false;
-//             }
-//         });
-
-//         if (!allChecked) {
-//             alert('Por favor, marque todos os procedimentos desejados.');
-//             event.preventDefault(); // Impede o envio do formulário se algum checkbox não estiver marcado
-//         }
+//     if (!allChecked) {
+//         alert('Por favor, marque todos os procedimentos desejados.');
+//         event.preventDefault(); // Impede o envio do formulário se algum checkbox não estiver marcado
+//     }
 // });
 
 
@@ -322,7 +326,132 @@
 
 
 
-//=============================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
