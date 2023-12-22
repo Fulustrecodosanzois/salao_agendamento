@@ -1,3 +1,4 @@
+
 // import { app, db } from './config-firebase.js';
 // import { collection, addDoc, getFirestore, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 // import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'; // Importando a função UUID v4
@@ -6,7 +7,41 @@
 
 // let horariosSelecionados = [];
 // const colecaoRef = collection(db, 'agendamentos');
-// let horarioSelecionado;
+// let horarioSelecionado = null; 
+
+
+// const elemento = document.getElementById('idDoElemento');
+// if (elemento !== null) {
+//     const valor = elemento.value;
+//     // Faça algo com o valor aqui...
+// } else {
+//     console.error('O elemento com o ID especificado não foi encontrado.');
+// }
+
+
+// function atualizarEventosHorariosDisponiveis() {
+//     const horariosDisponiveis = document.querySelectorAll('.horario-label');
+
+//     horariosDisponiveis.forEach(horario => {
+//         horario.addEventListener('click', function () {
+//             // Remove a classe de todos os horários selecionados anteriormente (se houver algum)
+//             const horariosSelecionados = document.querySelectorAll('.horario-selected');
+//             horariosSelecionados.forEach(horarioSelecionado => {
+//                 horarioSelecionado.classList.remove('horario-selected');
+//             });
+
+//             // Adiciona a classe ao horário clicado para destacá-lo como selecionado
+//             horario.classList.add('horario-selected');
+
+//             // Armazena o horário selecionado na variável global horarioSelecionado
+//             horarioSelecionado = horario.textContent.trim();
+
+//             // Chama a função para habilitar o botão de agendar ou executa outras ações necessárias
+//             habilitarBotaoAgendar();
+//         });
+//     });
+// }
+
 
 
 // function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
@@ -27,6 +62,8 @@
 //     let agendamentos = localStorage.getItem('dadosAgendamentos');
 //     agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
 
+
+
 //     const horariosAgendadosNessaData = agendamentos
 //         .filter(agendamento => agendamento.dataSelecionada === dateStr)
 //         .flatMap(agendamento => agendamento.horariosSelecionados);
@@ -42,28 +79,12 @@
 //         label.textContent = horarioFormatado;
 //         label.classList.add('btn', 'btn-light', 'horario-label');
 
-//         // Desabilitar horários já agendados
-//         if (!horariosAgendadosNessaData.includes(horarioFormatado)) {
-//             label.addEventListener('click', function () {
-//                 if (horarioSelecionado !== horarioFormatado) {
-//                     const horarioSelecionadoElement = document.querySelector('.horario-selected');
-//                     if (horarioSelecionadoElement) {
-//                         horarioSelecionadoElement.classList.remove('horario-selected');
-//                     }
-//                     label.classList.add('horario-selected');
-//                     horarioSelecionado = horarioFormatado;
-//                     habilitarBotaoAgendar();
-//                 } else {
-//                     label.classList.remove('horario-selected');
-//                     horarioSelecionado = null;
-//                     habilitarBotaoAgendar();
-//                 }
-//             });
-//         }
+
 
 //         horariosDisponiveis.appendChild(label);
 //     }
-
+//     // Após criar os horários disponíveis, atualize os eventos para esses novos elementos
+//     atualizarEventosHorariosDisponiveis();
 
 // }
 
@@ -131,6 +152,8 @@
 //                 alert('Desculpe, este horário já foi agendado por outra pessoa.');
 //                 return;
 //             }
+
+
 
 
 //             // Geração de um ID único para o agendamento
@@ -434,30 +457,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { app, db } from './config-firebase.js';
 import { collection, addDoc, getFirestore, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'; // Importando a função UUID v4
@@ -466,7 +465,41 @@ import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'; // Importando a fun
 
 let horariosSelecionados = [];
 const colecaoRef = collection(db, 'agendamentos');
-let horarioSelecionado;
+let horarioSelecionado = null; 
+
+
+const elemento = document.getElementById('idDoElemento');
+if (elemento !== null) {
+    const valor = elemento.value;
+    // Faça algo com o valor aqui...
+} else {
+    console.error('O elemento com o ID especificado não foi encontrado.');
+}
+
+
+function atualizarEventosHorariosDisponiveis() {
+    const horariosDisponiveis = document.querySelectorAll('.horario-label');
+
+    horariosDisponiveis.forEach(horario => {
+        horario.addEventListener('click', function () {
+            // Remove a classe de todos os horários selecionados anteriormente (se houver algum)
+            const horariosSelecionados = document.querySelectorAll('.horario-selected');
+            horariosSelecionados.forEach(horarioSelecionado => {
+                horarioSelecionado.classList.remove('horario-selected');
+            });
+
+            // Adiciona a classe ao horário clicado para destacá-lo como selecionado
+            horario.classList.add('horario-selected');
+
+            // Armazena o horário selecionado na variável global horarioSelecionado
+            horarioSelecionado = horario.textContent.trim();
+
+            // Chama a função para habilitar o botão de agendar ou executa outras ações necessárias
+            habilitarBotaoAgendar();
+        });
+    });
+}
+
 
 
 function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
@@ -487,6 +520,8 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
     let agendamentos = localStorage.getItem('dadosAgendamentos');
     agendamentos = agendamentos ? JSON.parse(agendamentos) : [];
 
+
+
     const horariosAgendadosNessaData = agendamentos
         .filter(agendamento => agendamento.dataSelecionada === dateStr)
         .flatMap(agendamento => agendamento.horariosSelecionados);
@@ -502,28 +537,12 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
         label.textContent = horarioFormatado;
         label.classList.add('btn', 'btn-light', 'horario-label');
 
-        // Desabilitar horários já agendados
-        if (!horariosAgendadosNessaData.includes(horarioFormatado)) {
-            label.addEventListener('click', function () {
-                if (horarioSelecionado !== horarioFormatado) {
-                    const horarioSelecionadoElement = document.querySelector('.horario-selected');
-                    if (horarioSelecionadoElement) {
-                        horarioSelecionadoElement.classList.remove('horario-selected');
-                    }
-                    label.classList.add('horario-selected');
-                    horarioSelecionado = horarioFormatado;
-                    habilitarBotaoAgendar();
-                } else {
-                    label.classList.remove('horario-selected');
-                    horarioSelecionado = null;
-                    habilitarBotaoAgendar();
-                }
-            });
-        }
+
 
         horariosDisponiveis.appendChild(label);
     }
-
+    // Após criar os horários disponíveis, atualize os eventos para esses novos elementos
+    atualizarEventosHorariosDisponiveis();
 
 }
 
@@ -591,6 +610,8 @@ document.getElementById('btnEnviar').addEventListener('click', function (event) 
                 alert('Desculpe, este horário já foi agendado por outra pessoa.');
                 return;
             }
+
+
 
 
             // Geração de um ID único para o agendamento

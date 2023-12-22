@@ -290,7 +290,6 @@ import { collection, addDoc, getFirestore, query, where, getDocs, doc, deleteDoc
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
     const colecaoRef = collection(db, 'agendamentos');
     const agendamentosRef = collection(db, 'agendamentos');
 
@@ -416,8 +415,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const tabs = new bootstrap.Tab(document.getElementById('monthTabs'));
             tabs.show(0); // Exibe a primeira aba por padrão ao carregar a página
-
-
 
 
             //-------------------------------- Lógica para o botão de EXCLUIR
