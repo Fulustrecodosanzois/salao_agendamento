@@ -510,7 +510,7 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
 
     if (dataSelecionada < hoje) {
         instance.setDate(hoje); // Define a data atual como a data selecionada
-        return;
+        
     }
 
     // Limpar os horários disponíveis anteriores
@@ -535,7 +535,7 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
 
         const label = document.createElement('label');
         label.textContent = horarioFormatado;
-        label.classList.add('btn', 'btn-light', 'horario-label');
+        label.classList.add('btn', 'btn-secondary', 'horario-label', 'w-50', 'fw-bolder');
 
 
 

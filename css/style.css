@@ -1,12 +1,14 @@
 /* Estilos personalizados */
-.horario-label {
-  margin-right: 5px;
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+
+
 }
 
-.horario-selected {
-  background-color: #007bff;
-  color: #fff;
-}
+
 
 
 /* ----------------  BOTÃO TOPO */
@@ -19,3 +21,38 @@
 
 }
 
+
+/* ---------------------- FORMULÁRIO */
+
+
+
+/* input::placeholder {
+  color: #000000;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -----------   TAMANHO DA TELA */
