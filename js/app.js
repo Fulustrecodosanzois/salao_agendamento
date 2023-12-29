@@ -1,4 +1,3 @@
-
 // import { app, db } from './config-firebase.js';
 // import { collection, addDoc, getFirestore, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 // import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'; // Importando a função UUID v4
@@ -52,7 +51,7 @@
 
 //     if (dataSelecionada < hoje) {
 //         instance.setDate(hoje); // Define a data atual como a data selecionada
-//         return;
+
 //     }
 
 //     // Limpar os horários disponíveis anteriores
@@ -77,7 +76,7 @@
 
 //         const label = document.createElement('label');
 //         label.textContent = horarioFormatado;
-//         label.classList.add('btn', 'btn-light', 'horario-label');
+//         label.classList.add('btn', 'btn-secondary', 'horario-label', 'w-50', 'fw-bolder');
 
 
 
@@ -329,20 +328,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ----------------------------------------------------------------
 
 
 
@@ -465,7 +451,7 @@ import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid'; // Importando a fun
 
 let horariosSelecionados = [];
 const colecaoRef = collection(db, 'agendamentos');
-let horarioSelecionado = null; 
+let horarioSelecionado = null;
 
 
 const elemento = document.getElementById('idDoElemento');
@@ -510,7 +496,7 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
 
     if (dataSelecionada < hoje) {
         instance.setDate(hoje); // Define a data atual como a data selecionada
-        
+
     }
 
     // Limpar os horários disponíveis anteriores
@@ -527,20 +513,25 @@ function mostrarHorariosDisponiveis(selectedDates, dateStr, instance) {
         .flatMap(agendamento => agendamento.horariosSelecionados);
 
     // Criar e exibir os horários disponíveis para o dia selecionado
+
     for (let hora = 8; hora <= 19; hora++) {
         const horario = new Date(dataSelecionada);
         horario.setHours(hora, 0, 0, 0);
 
         const horarioFormatado = horario.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        const label = document.createElement('label');
-        label.textContent = horarioFormatado;
-        label.classList.add('btn', 'btn-secondary', 'horario-label', 'w-50', 'fw-bolder');
+        const labelHTML = `
+        <label class="btn btn-secondary fw-bolder w-auto">
+            ${horarioFormatado}
+        </label>
+                    `;
 
 
 
-        horariosDisponiveis.appendChild(label);
+        horariosDisponiveis.innerHTML += labelHTML;
     }
+
+
     // Após criar os horários disponíveis, atualize os eventos para esses novos elementos
     atualizarEventosHorariosDisponiveis();
 
@@ -784,6 +775,12 @@ document.getElementById('datePicker').addEventListener('change', carregarHorario
 
 // Chamar a função para carregar os horários disponíveis inicialmente
 carregarHorariosDisponiveis();
+
+
+
+
+
+
 
 
 
