@@ -96,7 +96,7 @@ form {
     padding: 10px 0 10px 40px;
     font-family: "arial";
     font-size: 23px;
-    font-weight: 400;
+    font-weight: 600;
     color: #d2d2d2;
     background: #ffffff;
     border: 0;
@@ -109,7 +109,7 @@ form {
 .input-slide::-webkit-input-placeholder {
 
     color: #4c4e4e;
-    font-weight: 300;
+    font-weight: 600;
 
 }
 
@@ -194,7 +194,7 @@ form {
     position: relative;
     display: inline-block;
     width: 100%;
-    padding: 10px 0 10px 75px;
+    padding: 10px 0 10px 40px;
     font-family: "arial";
     font-size: 23px;
     font-weight: 400;
@@ -211,7 +211,7 @@ form {
 .textarea-slide::-webkit-input-placeholder {
 
     color: #4e4e4c;
-    font-weight: 300;
+    font-weight: 600;
 
 }
 
@@ -294,22 +294,21 @@ form {
 .box-btn {
 
     width: 100%;
-
     float: left;
 
 }
 
 .btn-envia {
 
-    padding: 1em 2em;
+    padding: 15px;
     cursor: pointer;
     border: none;
     background-color: #fbff21;
     text-decoration: none;
     font-weight: 900;
-    font-size: 1.1em;
+    font-size: 25px;
     color: #000000;
-    border-radius: 3px;
+    border-radius: 10px;
     width: 80%;
 
 }
@@ -349,6 +348,5 @@ input[type="date"] {
     font-family: Arial, sans-serif;
     font-size: 25px; 
     color: #333;
- 
     width: 100%;
   }
