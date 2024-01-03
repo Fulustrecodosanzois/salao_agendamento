@@ -27,25 +27,25 @@
 }
 
 
-/* ---------------- ESTILO DO FORMULÁRIO */
+/* ---------------------------- ESTILO DO FORMULÁRIO */
 
 
 body {
     background-image: "../image";
-    background-color: #000000;
+    background: radial-gradient(circle, rgb(252, 246, 246), rgba(219, 0, 0, 0), rgb(251, 251, 130));
 }
 
 
 .title-form h1 {
 
     font-size: 28px;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0;
     line-height: 1.5em;
     padding-bottom: 15px;
     position: relative;
-    color: #ffffff;
-    font-family: 'open_sansbold';
+    color: #000000;
+    font-family: 'caviar dreams';
 
 }
 
@@ -86,7 +86,7 @@ form {
 
 }
 
-/*input Animado*/
+/* ------------------------------------------ input Animado*/
 
 .input-slide {
 
@@ -124,10 +124,9 @@ form {
     padding: 7px 12px;
     font-size: 33px;
     font-weight: 900;
-    
-    border-right: 1px #5a5a5a solid;
-    background: transparent;
-    color: #d2d2d2;
+    /* border-right: 1px #5a5a5a solid; */
+    background: black;
+    color: #ffffff;
     text-align: left;
     transition: all .3s ease-in-out, color .3s ease-out;
     border-top-left-radius: 3px;
@@ -187,7 +186,7 @@ form {
 
 }
 
-/*TextArea*/
+/* ---------------------------------------------- TextArea*/
 
 .textarea-slide {
 
@@ -227,8 +226,7 @@ form {
     font-size: 33px;
     font-weight: 700;
     text-transform: uppercase;
-    border-right: 1px #7f7f7f solid;
-    background: transparent;
+    background: black;
     color: #fff34e;
     text-align: left;
     transition: all .3s ease-in-out, color .3s ease-out;
@@ -289,7 +287,7 @@ form {
 
 }
 
-/*Botão*/
+/* --------------------------------------- Botão enviar*/
 
 .box-btn {
 
@@ -342,11 +340,11 @@ form {
 
 input[type="date"] {
     appearance: none;
-    border: 1px solid #ccc;
-    border-radius: 4px; 
-    outline: none; 
+    /* border: 1px solid #ccc; */
+    border-radius: 4px;
+    outline: none;
     font-family: Arial, sans-serif;
-    font-size: 25px; 
+    font-size: 25px;
     color: #333;
     width: 100%;
-  }
+}
