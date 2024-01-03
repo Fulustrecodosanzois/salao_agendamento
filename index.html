@@ -1,215 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Agendamentos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <title>Agendamentos</title>
 </head>
 
 <body>
-    <a href="pages/conf_agend.html">Painel de Agendamentos</a>
 
+    <header>
+        <nav>
 
+        </nav>
+    </header>
 
-    <div class="box my-4">
-
-        <form id="formAgendamento" action="" class="formulario">
-
-            <div class="">
-                <h3 class="fonte titulo">Faça Seu agendamento Aqui!</h3>
-                <div class="input-box">
-
-                    <input type="text" class="" id="nome" placeholder="Nome Completo" required>
-                </div>
-                <div class="input-box">
-                    <input inputmode="numeric" type="text" class="" id="telefone" placeholder="(XX) XXXXX XXXX"
-                        maxlength="15" required>
-                </div>
-
-                <!-- --------------------------------PROCEDIMENTOS  -->
-
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Escolha os Procedimentos
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="60" id="checkbox1">
-                                    <label class="form-check-label" for="checkbox1">
-                                        Corte de cabelo
-                                    </label>
-                                    <span class="price">R$ 60,00</span>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="60" id="checkbox2">
-                                    <label class="form-check-label" for="checkbox2">
-                                        Manicure
-                                    </label>
-                                    <span class="price">R$ 60,00</span>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="120" id="checkbox3">
-                                    <label class="form-check-label" for="checkbox3">
-                                        Pedicure
-                                    </label>
-                                    <span class="price">R$ 120,00</span>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="180" id="checkbox4">
-                                    <label class="form-check-label" for="checkbox4">
-                                        Maquiagem
-                                    </label>
-                                    <span class="price">R$ 180,00</span>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="60" id="checkbox5">
-                                    <label class="form-check-label" for="checkbox5">
-                                        Tratamento Facial
-                                    </label>
-                                    <span class="price">R$ 60,00</span>
-                                </div>
-
+    <main>
+       <section>
+        <div>
+            <form action="">
+                <div class="box-formulario">        
+        
+                    <div class="formulario">
+                        
+                        <div class="title-form">
+                          <h1> Agende Seu Horário!</h1>
+                        </div>
+            
+                        <form action="#" method="post">
+            
+                            <span>
+                                <input type="text" class="input-slide" id="nome" name="nome" placeholder="Nome" autocomplete="off" required=""/>
+                                <label for="nome"> <i class="icon icon-user-outline"></i> </label>
+                            </span>
+            
+                            <span>
+                                <input type="text" class="input-slide" id="telefone" name="telefone" placeholder="Telefone" autocomplete="off" required=""/>
+                                <label for="telefone"> <i class="icon icon-mail-3"></i> </label>
+                            </span>
+            
+                            <span>
+                                <input type="date" class="input-slide" id="data" name="data" autocomplete="off" required=""/>
+                                <label for="assunto"> <i class="icon icon-help"></i> </label>
+                            </span>
+            
+                            <span>
+                                <textarea type="text" class="textarea-slide" id="mensagem" name="mensagem" rows="3" placeholder="Observação..." autocomplete="off" required=""></textarea>
+                                <label for="mensagem"> <i class="icon icon-commenting-o"></i> </label>
+                            </span>
+            
+                            <div class="box-btn">
+                                 
+                                <button type="submit" class="btn-envia zoom-shadow">
+                                    <i class="icon icon-export">Enviar</i>
+                                </button>
+            
                             </div>
-                        </div>
+            
+                        </form>
+            
                     </div>
-                </div>
-
-                <!-- ----------------------- CALENDÁRIO E HORÁRIOS -->
-
-                <div class="mt-4">
-                    <label for="" class="titulo_proc">Escolha o dia para atendimento</label>
-
-                    <div class="row">
-                        <div class="">
-                            <input type="date" id="datePicker" class="" placeholder="Clique para selecionar a data"
-                                required>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div class="">
-                            <div id="horariosDisponiveis" class="my-5 mx-auto row d-flex align-content-center ">
-
-                                <!-- Aqui serão exibidos os horários disponíveis -->
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="">
-                    <button class="button" type="submit" id="btnEnviar">Agendar</button>
-                </div>
-
-
-            </div>
-
-        </form>
-
-    </div>
-
-
-
-    <!----------------------------------- Modal Confirmação agendamento-->
-
-    <div class="modal fade" id="modalConfirmacao" tabindex="-1" aria-labelledby="modalConfirmacaoLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalConfirmacaoLabel">Confirmação de Agendamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="dadosConfirmacao">
-                    <!-- Aqui serão exibidos os dados do agendamento -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnConfirmar">Confirmar</button>
-                </div>
-            </div>
+            
+                </div><!--Box Formulario-->  
+            </form>
         </div>
-    </div>
-
-
-    <!--------------------------------------------------- Modal desenvolvedor-->
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-headero">
-                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Desenvolvedores</h1>
-                    <button type="button" class="btn-close ms-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="flex-column text-center mt-3">
-                        <div>
-                            <img src="image/Logo-monhang.png" alt="" width="80px">
-                        </div>
-                        <p class="text-center mt-4">A <strong>Monhang Tech</strong> possui uma equipe de desenvolvedores
-                            apaixonados
-                            por
-                            criar experiências excepcionais na web. De códigos elegantes a designs impressionantes,
-                            estamos aqui para
-                            transformar suas ideias em realidade. Junte-se a nós nesta jornada emocionante e leve sua
-                            presença online
-                            para o próximo nível. <br><br><strong>Vamos codificar o futuro juntos!</strong></p>
-
-                        <a href="mailto:monhangtech@gmail.com" class="btn text-white mt-3">Solicite Agora
-                            um
-                            Orçamento!</a>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-secondary" data-bs-dismiss="modal">Fechar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <footer class="bg-black p-2 text-center fixed-bottom">
-
-        <section class="mx-lg-5 d-flex justify-content-lg-between justify-content-center gap-lg-0 gap-3 flex-wrap">
-            <div class="h-100">
-                <small class="text-white text-center mx-3">Todos os direitos reservados &copy; 2023</small>
-            </div>
-
-            <!---------------------------------------------- ÍCONES REDES SOCIAIS -->
-
-            <div class="fs-4 d-flex gap-4 mb-2">
-                <a href="https://www.youtube.com/" target="_blank" class="text-white"><i
-                        class="fa-brands fa-youtube tube"></i></a>
-                <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F" target="_blank"
-                    class="text-white"><i class="fa-brands fa-twitter twitter"></i></a>
-                <a href="https://www.instagram.com/" target="_blank" class="text-white"><i
-                        class="fa-brands fa-instagram insta"></i></a>
-                <a href="https://www.tiktok.com/pt-BR/" target="_blank" class="text-white"><i
-                        class="fa-brands fa-tiktok tiktok"></i></a>
-                <a href="https://www.facebook.com/" target="_blank" class="text-white"><i
-                        class="fa-brands fa-facebook face"></i></a>
-            </div>
-        </section>
+       </section>
+    </main>
 
 
 
-        <button type="button" class="btn rounded text-white shadow-sm mb-4 border" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">
-            SOBRE OS DESENVOLVEDORES</button>
+
+
+    <footer>
 
     </footer>
 
@@ -217,16 +81,16 @@
 
 
 
-    <script src="js/autenticacao.js"></script>
-    <script type="module" src="js/app.js"></script>
-    <script type="module" src="js/config-firebase.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
+
+
+
+
+
+
+    <script type="module" src="js/app.js"></script>
 </body>
 
 </html>

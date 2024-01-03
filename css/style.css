@@ -1,327 +1,310 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  
-  /* background-image: url('../image/fundo.jpg'); */
-
-  box-sizing: border-box;
-}
-
-/* ----------------  BOTÃO TOPO */
-
-#btnTopModal {
-
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-
+    background-image: "../image";
+    background-color: #000000;
 }
 
 
-/* Estilos para o formulário */
-.box {
-  width: 90%;
-  margin: auto;
-  padding: 20px;
-  background-color: rgba(0, 0, 255, 0.5); 
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  
+.title-form h1 {
+
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.5em;
+    padding-bottom: 15px;
+    position: relative;
+    color: #ffffff;
+    font-family: 'open_sansbold';
+
+
+
+}
+
+
+.box-formulario {
+
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 60px 0;
+
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .formulario {
-  text-align: center;
-}
 
-.titulo {
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 28px;
- 
-}
-
-.input-box {
-  margin-bottom: 15px;
-}
-
-input[type='text'] {
-  width: calc(100% - 20px);
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-input[type='text']:focus {
-  border-color: #007bff;
-}
-
-input[type='submit'] {
-  padding: 12px 24px;
-  font-size: 18px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-input[type='submit']:hover {
-  background-color: #0056b3;
-}
-
-/* Estilos para o checkbox */
-.form-check {
-  margin-bottom: 10px;
-}
-
-/* Estilos para o acordeão */
-.accordion-button {
-  background-color: #007bff;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 8px;
-
-  transition: background-color 0.3s ease;
-}
-
-.accordion-button:hover {
-  background-color: #0056b3;
-}
-
-.accordion-collapse {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-}
-
-/* Estilos para o modal */
-.modal-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.modal-header {
-  border-bottom: none;
-}
-
-.modal-title {
-  color: #333;
-  font-size: 24px;
-}
-
-.modal-footer .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-
-}
-
-.modal-footer .btn-primary:hover {
-  background-color: #0056b3;
+    width: 75%;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 10% 5%;
+    text-align: center;
+    border-radius: 20px;
 
 }
 
 
-.titulo_proc {
-  font-weight: 800;
-  margin-bottom: 15px;
-}
-
-.accordion-button {
-  font-weight: 800;
-
+.formulario span {
+    position: relative;
+    display: flex;
+    margin: 20px 10px;
 
 }
 
+/*input Animado*/
 
+.input-slide {
 
-/* --------------------------------- CALENDARIO */
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0 10px 75px;
+    font-family: "arial";
+    font-size: 23px;
+    font-weight: 400;
+    color: #d2d2d2;
+    background: #ffffff;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    transition: all .3s ease-in-out;
 
-
-
-
-/* Estilos para o DatePicker */
-.flatpickr-calendar {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.flatpickr-day {
-  border-radius: 50%;
+.input-slide::-webkit-input-placeholder {
+
+    color: #4c4e4e;
+    font-weight: 300;
+
 }
 
-.flatpickr-monthDropdown-months, .flatpickr-yearDropdown-years {
-  background-color: #007bff;
-  color: #fff;
+.input-slide+label {
+
+    display: inline-block;
+    position: absolute;
+    transform: translateX(0);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 7px 12px;
+    font-size: 33px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-right: 1px #5a5a5a solid;
+    background: transparent;
+    color: #d2d2d2;
+    text-align: left;
+    transition: all .3s ease-in-out, color .3s ease-out;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    overflow: hidden;
+
 }
 
-.flatpickr-prev-month, .flatpickr-next-month, .flatpickr-prev-year, .flatpickr-next-year {
-  color: #007bff;
+.input-slide+label:after {
+
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 100%;
+    bottom: 0;
+    width: 100%;
+    background: #e8f22a;
+    z-index: -1;
+    transform: translate(0);
+    transition: all .3s ease-in-out;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+
 }
 
-.flatpickr-current-month, .flatpickr-current-year {
-  color: #333;
+.input-slide:focus,
+.input-slidev:active {
+
+    color: #4e4e4c;
+    background: #ffffff;
+    padding: 10px 0 10px 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
 }
 
-.flatpickr-day.today {
-  background-color: #007bff;
-  color: #fff;
+.input-slide:focus::-webkit-input-placeholder,
+.input-slide:active::-webkit-input-placeholder {
+
+    color: #aaa;
+
 }
 
-.flatpickr-day.selected {
-  background-color: #0056b3;
-  color: #fff;
+.input-slide:focus+label,
+.input-slide:active+label {
+
+    color: #fff;
+    transform: translateX(-100%);
+
 }
 
-.flatpickr-day.selected:hover {
-  background-color: #004080;
+.input-slide:focus+label:after,
+.input-slide:active+label:after {
+
+    background: #eeff36;
+    transform: translate(100%);
+
 }
 
-.flatpickr-weekdays {
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ddd;
+/*TextArea*/
+
+.textarea-slide {
+
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0 10px 75px;
+    font-family: "arial";
+    font-size: 23px;
+    font-weight: 400;
+    color: #d2d2d2;
+    background: #ffffff;
+    border: 0;
+    resize: none;
+    border-radius: 3px;
+    outline: 0;
+    transition: all .3s ease-in-out;
+
 }
 
-.flatpickr-weekday {
-  color: #333;
+.textarea-slide::-webkit-input-placeholder {
+
+    color: #4e4e4c;
+    font-weight: 300;
+
 }
 
-.flatpickr-day.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.textarea-slide+label {
+
+    display: inline-block;
+    position: absolute;
+    transform: translateX(0);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 7px 12px;
+    font-size: 33px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-right: 1px #7f7f7f solid;
+    background: transparent;
+    color: #fff34e;
+    text-align: left;
+    transition: all .3s ease-in-out, color .3s ease-out;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    overflow: hidden;
+
 }
 
-/* Estilos para o botão do DatePicker */
-.flatpickr-calendar.open {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+.textarea-slide+label:after {
+
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 100%;
+    bottom: 0;
+    width: 100%;
+    background: #dfe0cc;
+    z-index: -1;
+    transform: translate(0);
+    transition: all .3s ease-in-out;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+
 }
 
-.flatpickr-input {
-  width: calc(100% - 20px);
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  outline: none;
-  transition: border-color 0.3s ease;
+.textarea-slide:focus,
+.textarea-slide:active {
+
+    color: #777777;
+    background: #ffffff;
+    padding: 10px 0 10px 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
 }
 
-.flatpickr-input:focus {
-  border-color: #007bff;
+.textarea-slide:focus::-webkit-input-placeholder,
+.textarea-slide:active::-webkit-input-placeholder {
+
+    color: #aaa;
+
 }
 
+.textarea-slide:focus+label,
+.textarea-slide:active+label {
 
+    color: #fff;
+    transform: translateX(-100%);
 
-
-/* --------------------------- PROCEDIMENTOS */
-
-.form-check {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
+.textarea-slide:focus+label:after,
+.textarea-slide:active+label:after {
 
-input[type="checkbox"] {
-  border: 2px solid red;
+    background: #fbff21;
+    transform: translate(100%);
+
 }
 
-.price {
-  margin-left: auto;
+/*Botão*/
+.box-btn {
+
+    width: 100%;
+
+    float: left;
+
 }
 
+.btn-envia {
 
+    padding: 1em 2em;
+    cursor: pointer;
+    border: none;
+    background-color: #fbff21;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 1.1em;
+    color: #000000;
+    border-radius: 3px;
+    width: 80%;
 
-/* ---------------------------- BOTÃO AGENDAR */
-
-
-.button {
-  min-width: 300px;
-  min-height: 60px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 1.3px;
-  font-weight: 700;
-  color: #313133;
-  background: #564fd1;
-  background: linear-gradient(90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100%);
-  border: none;
-  border-radius: 1000px;
-  box-shadow: 12px 12px 24px rgba(79, 209, 197, .64);
-  transition: all 0.3s ease-in-out 0s;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  padding: 10px;
 }
 
-.button::before {
-  content: '';
-  border-radius: 1000px;
-  min-width: calc(300px + 12px);
-  min-height: calc(60px + 12px);
-  border: 6px solid #00FFCB;
-  box-shadow: 0 0 60px rgba(0, 255, 203, .64);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all .3s ease-in-out 0s;
+.zoom-shadow {
+
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, transform;
+    transition-property: box-shadow, transform;
+
 }
 
-.button:hover, .button:focus {
-  color: #313133;
-  transform: translateY(-6px);
+.zoom-shadow:hover, .zoom-shadow:focus, .zoom-shadow:active {
+
+    box-shadow: 0 13px 8px -8px rgba(0, 0, 0, 0.5);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+
 }
-
-.button:hover::before, button:focus::before {
-  opacity: 1;
-}
-
-.button::after {
-  content: '';
-  width: 30px;
-  height: 30px;
-  border-radius: 100%;
-  border: 6px solid #00FFCB;
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ring 1.5s infinite;
-}
-
-.button:hover::after, button:focus::after {
-  animation: none;
-  display: none;
-}
-
-
-/* ------------------------- HORARIOS DISPONIVEIS */
-
-.horario {
-
-  width: 80%;
-}
-
-
-/* ---------------------- FORMULÁRIO */
-
-
-
-/* input::placeholder {
-  color: #000000;
-} */
