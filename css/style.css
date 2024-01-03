@@ -1,3 +1,35 @@
+.borda {
+    border: 2px solid red;
+}
+
+.borda2 {
+    border: 2px solid rgb(240, 243, 38);
+}
+
+.borda3 {
+    border: 2px solid rgb(143, 230, 50);
+}
+
+.borda4 {
+    border: 2px solid rgb(54, 238, 255);
+}
+
+.borda5 {
+    border: 2px solid rgb(16, 64, 255);
+}
+
+.borda6 {
+    border: 2px solid rgb(221, 0, 255);
+}
+
+.borda7 {
+    border: 2px solid rgb(228, 123, 38);
+}
+
+
+/* ---------------- ESTILO DO FORMULÁRIO */
+
+
 body {
     background-image: "../image";
     background-color: #000000;
@@ -14,8 +46,6 @@ body {
     position: relative;
     color: #ffffff;
     font-family: 'open_sansbold';
-
-
 
 }
 
@@ -41,12 +71,11 @@ form {
 .formulario {
 
     width: 75%;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    padding: 10% 5%;
+    background-color: rgba(188, 188, 188, 0.2);
+    padding: 5% 5%;
     text-align: center;
     border-radius: 20px;
-
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 
@@ -64,7 +93,7 @@ form {
     position: relative;
     display: inline-block;
     width: 100%;
-    padding: 10px 0 10px 75px;
+    padding: 10px 0 10px 40px;
     font-family: "arial";
     font-size: 23px;
     font-weight: 400;
@@ -94,8 +123,8 @@ form {
     bottom: 0;
     padding: 7px 12px;
     font-size: 33px;
-    font-weight: 700;
-    text-transform: uppercase;
+    font-weight: 900;
+    
     border-right: 1px #5a5a5a solid;
     background: transparent;
     color: #d2d2d2;
@@ -261,6 +290,7 @@ form {
 }
 
 /*Botão*/
+
 .box-btn {
 
     width: 100%;
@@ -308,3 +338,17 @@ form {
     transform: scale(1.05);
 
 }
+
+
+
+input[type="date"] {
+    appearance: none;
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    outline: none; 
+    font-family: Arial, sans-serif;
+    font-size: 25px; 
+    color: #333;
+ 
+    width: 100%;
+  }
